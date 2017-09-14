@@ -1,118 +1,99 @@
 package gameon.map.rest;
 
+import java.util.Objects;
+
 public class Site {
 
-	public static enum RoomType {
-		Room, Empty
-	}
+    public static enum RoomType {
+        Room, Empty
+    }
 
-	/**
-	 * Site id
-	 */
-	private String _id;
+    /**
+     * Site id
+     */
+    private String _id;
 
-	private RoomInfo info;
+    private RoomInfo info;
 
-	/**
-	 * Owner
-	 */
-	private String owner;
+    /**
+     * Owner
+     */
+    private String owner;
 
-	private Coordinates coord;
+    private Coordinates coord;
 
-	private RoomType type;
+    private RoomType type;
 
-	public String get_id() {
-		return _id;
-	}
+    public String get_id() {
+        return _id;
+    }
 
-	public void set_id(String _id) {
-		this._id = _id;
-	}
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
-	public RoomInfo getInfo() {
-		return info;
-	}
+    public RoomInfo getInfo() {
+        return info;
+    }
 
-	public void setInfo(RoomInfo info) {
-		this.info = info;
-	}
+    public void setInfo(RoomInfo info) {
+        this.info = info;
+    }
 
-	public String getOwner() {
-		return owner;
-	}
+    public String getOwner() {
+        return owner;
+    }
 
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
-	public Coordinates getCoord() {
-		return coord;
-	}
+    public Coordinates getCoord() {
+        return coord;
+    }
 
-	public void setCoord(Coordinates coord) {
-		this.coord = coord;
-	}
+    public void setCoord(Coordinates coord) {
+        this.coord = coord;
+    }
 
-	public RoomType getType() {
-		return type;
-	}
+    public RoomType getType() {
+        return type;
+    }
 
-	public void setType(RoomType type) {
-		this.type = type;
-	}
+    public void setType(RoomType type) {
+        this.type = type;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((_id == null) ? 0 : _id.hashCode());
-		result = prime * result + ((coord == null) ? 0 : coord.hashCode());
-		result = prime * result + ((info == null) ? 0 : info.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Site)) {
+            return false;
+        }
+        Site site = (Site) o;
+        return Objects.equals(_id, site._id) &&
+                Objects.equals(info, site.info) &&
+                Objects.equals(owner, site.owner) &&
+                Objects.equals(coord, site.coord) &&
+                type == site.type;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Site other = (Site) obj;
-		if (_id == null) {
-			if (other._id != null)
-				return false;
-		} else if (!_id.equals(other._id))
-			return false;
-		if (coord == null) {
-			if (other.coord != null)
-				return false;
-		} else if (!coord.equals(other.coord))
-			return false;
-		if (info == null) {
-			if (other.info != null)
-				return false;
-		} else if (!info.equals(other.info))
-			return false;
-		if (owner == null) {
-			if (other.owner != null)
-				return false;
-		} else if (!owner.equals(other.owner))
-			return false;
-		if (type != other.type)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(_id, info, owner, coord, type);
+    }
 
-	@Override
-	public String toString() {
-		return "Site [" + (_id != null ? "_id=" + _id + ", " : "") + (info != null ? "info=" + info + ", " : "")
-				+ (owner != null ? "owner=" + owner + ", " : "") + (coord != null ? "coord=" + coord + ", " : "")
-				+ (type != null ? "type=" + type : "") + "]";
-	}
-
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Site{");
+        sb.append("_id='").append(_id).append('\'');
+        sb.append(", info=").append(info);
+        sb.append(", owner='").append(owner).append('\'');
+        sb.append(", coord=").append(coord);
+        sb.append(", type=").append(type);
+        sb.append('}');
+        return sb.toString();
+    }
 }
