@@ -73,11 +73,11 @@ public class Site implements Bean {
 
     @PropertyDefinition
     @Column
-    private int x;
+    private long x;
 
     @PropertyDefinition
     @Column
-    private int y;
+    private long y;
 
     @PropertyDefinition
     @Column
@@ -327,7 +327,7 @@ public class Site implements Bean {
      * Gets the x.
      * @return the value of the property
      */
-    public int getX() {
+    public long getX() {
         return x;
     }
 
@@ -335,7 +335,7 @@ public class Site implements Bean {
      * Sets the x.
      * @param x  the new value of the property
      */
-    public void setX(int x) {
+    public void setX(long x) {
         this.x = x;
     }
 
@@ -352,7 +352,7 @@ public class Site implements Bean {
      * Gets the y.
      * @return the value of the property
      */
-    public int getY() {
+    public long getY() {
         return y;
     }
 
@@ -360,7 +360,7 @@ public class Site implements Bean {
      * Sets the y.
      * @param y  the new value of the property
      */
-    public void setY(int y) {
+    public void setY(long y) {
         this.y = y;
     }
 
