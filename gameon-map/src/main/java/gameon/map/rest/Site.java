@@ -4,10 +4,6 @@ import java.util.Objects;
 
 public class Site {
 
-    public static enum RoomType {
-        Room, Empty
-    }
-
     /**
      * Site id
      */

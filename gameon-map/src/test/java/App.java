@@ -3,7 +3,7 @@ import org.joda.beans.ser.JodaBeanSer;
 import gameon.map.graph.Database;
 import gameon.map.graph.Site;
 
-public class Site1 {
+public class App {
 
 	public static void main(String[] args) {
 		Site root = createRoot();
@@ -24,8 +24,8 @@ public class Site1 {
 		s.setId("__root");
 		s.setX(0);
 		s.setY(0);
-		s.setName("First Room");
-		s.setFullName("The First Room");
+		s.setName("First ROOM");
+		s.setFullName("The First ROOM");
 		s.setDescription("A helpful room with doors in every possible direction.");
 		s.setConnectionTarget("wss://secondroom:9008/barn/ws");
 		s.setConnectionToken("A-totally-arbitrary-really-long-string");
