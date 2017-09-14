@@ -16,7 +16,7 @@ public class N4JTest {
 		final String message = "OI OTAVIO";
 		
 		//CONECTA NA BASE DE DADOS
-		Driver n4jDriver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1q2w3e4r"));
+		Driver n4jDriver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "admin"));
 		
 		//CRIA SESSÃO
 		try (Session session = n4jDriver.session()) {
