@@ -29,7 +29,7 @@ public class Database {
 	
 	public Database() {
 		//FIXME: params
-		n4jDriver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1q2w3e4r"));
+		n4jDriver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "admin"));
 	}
 	
 	public boolean createSite(Site s) {

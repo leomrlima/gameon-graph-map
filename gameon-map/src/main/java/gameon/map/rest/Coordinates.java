@@ -1,61 +1,60 @@
 package gameon.map.rest;
 
+import java.util.Objects;
+
 public class Coordinates {
 
-	/**
-	 * X coordinate
-	 */
-	private int x;
+    /**
+     * X coordinate
+     */
+    private int x;
 
-	/**
-	 * Y coordinate
-	 */
-	private int y;
+    /**
+     * Y coordinate
+     */
+    private int y;
 
-	public int getX() {
-		return x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public void setY(int y) {
+        this.y = y;
+    }
 
-	@Override
-	public String toString() {
-		return "Coordinates [x=" + x + ", y=" + y + "]";
-	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Coordinates)) {
+            return false;
+        }
+        Coordinates that = (Coordinates) o;
+        return x == that.x &&
+                y == that.y;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Coordinates other = (Coordinates) obj;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Coordinates{");
+        sb.append("x=").append(x);
+        sb.append(", y=").append(y);
+        sb.append('}');
+        return sb.toString();
+    }
 }
