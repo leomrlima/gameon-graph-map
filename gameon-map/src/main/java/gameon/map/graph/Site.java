@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Site {
 
     @Id
-    private String id;
+    private Long id;
 
     @Column
     private String name;
@@ -60,12 +60,8 @@ public class Site {
     private boolean empty;
 
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

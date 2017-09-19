@@ -3,6 +3,7 @@ import java.util.Optional;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 
+import gameon.map.graph.Direction;
 import gameon.map.graph.Site;
 import gameon.map.graph.SiteService;
 
@@ -14,13 +15,16 @@ public class App {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
             SiteService siteService = container.select(SiteService.class).get();
 
-            Site root = createRoot();
-            System.out.println(root);
-            siteService.save(root);
 
-            Optional<Site> byName = siteService.findByName(root.getName());
-            Optional<Site> result = siteService.findById(byName.get().getId());
-            System.out.println(result.get());
+            siteService.save(createRoot());
+            siteService.save(secondRoom());
+
+            Site root = siteService.findByName("First ROOM").get();
+            Site secondRoom = siteService.findByName("Second ROOM").get();
+
+            siteService.edge(root, Direction.NORH, secondRoom);
+            Optional<Site> result = siteService.goTo(secondRoom, Direction.SOUTH);
+            System.out.println(result);
         }
     }
 
@@ -31,6 +35,21 @@ public class App {
         site.setY(0);
         site.setName("First ROOM");
         site.setFullName("The First ROOM");
+        site.setDescription("A helpful room with doors in every possible direction.");
+        site.setConnectionTarget("wss://secondroom:9008/barn/ws");
+        site.setConnectionToken("A-totally-arbitrary-really-long-string");
+        site.setConnectionType("websocket");
+        site.setEmpty(false);
+        return site;
+    }
+
+    private static Site secondRoom() {
+        Site site = new Site();
+        site.setOwner("_leo");
+        site.setX(1);
+        site.setY(0);
+        site.setName("Second ROOM");
+        site.setFullName("The Second ROOM");
         site.setDescription("A helpful room with doors in every possible direction.");
         site.setConnectionTarget("wss://secondroom:9008/barn/ws");
         site.setConnectionToken("A-totally-arbitrary-really-long-string");

@@ -1,6 +1,7 @@
 package gameon.map.graph;
 
 import org.jnosql.artemis.Database;
+import org.jnosql.artemis.graph.GraphTemplate;
 import org.jnosql.artemis.graph.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,6 +17,9 @@ public class SiteService {
     @Inject
     @Database(GRAPH)
     private SiteRepository repository;
+
+    @Inject
+    private GraphTemplate template;
 
 
     @Transactional
@@ -33,4 +37,15 @@ public class SiteService {
     }
 
 
+    @Transactional
+    public void edge(Site site, Direction direction, Site siteB) {
+        template.edge(site, direction.get(), siteB);
+        template.edge(siteB, direction.getReversal(), site);
+
+    }
+
+
+    public Optional<Site> goTo(Site secondRoom, Direction direction) {
+        return template.getTraversalVertex(secondRoom.getId()).out(direction.get()).<Site>next();
+    }
 }
