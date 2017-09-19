@@ -56,6 +56,12 @@ public class Site {
     @Column
     private long y;
 
+    /**
+     * Weight for private Site placement algorithm
+     */
+    @Column
+    private long weight;
+
     @Column
     private boolean empty;
 
@@ -175,6 +181,7 @@ public class Site {
         sb.append(", owner='").append(owner).append('\'');
         sb.append(", x=").append(x);
         sb.append(", y=").append(y);
+        sb.append(", y=").append(weight);
         sb.append(", empty=").append(empty);
         sb.append('}');
         return sb.toString();

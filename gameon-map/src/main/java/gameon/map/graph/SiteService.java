@@ -14,38 +14,33 @@ import static org.jnosql.artemis.DatabaseType.GRAPH;
 @ApplicationScoped
 public class SiteService {
 
-    @Inject
-    @Database(GRAPH)
-    private SiteRepository repository;
+	@Inject
+	@Database(GRAPH)
+	private SiteRepository repository;
 
-    @Inject
-    private GraphTemplate template;
+	@Inject
+	private GraphTemplate template;
 
+	@Transactional
+	public void save(Site site) {
+		repository.save(site);
+	}
 
-    @Transactional
-    public void save(Site site) {
-        repository.save(site);
-    }
+	public Optional<Site> findById(String id) {
+		return repository.findById(id);
+	}
 
+	public Optional<Site> findByName(String name) {
+		return repository.findByName(name);
+	}
 
-    public Optional<Site> findById(String id) {
-        return repository.findById(id);
-    }
+	@Transactional
+	public void edge(Site siteA, Direction direction, Site siteB) {
+		template.edge(siteA, direction.get(), siteB);
+		template.edge(siteB, direction.getReversal(), siteA);
+	}
 
-    public Optional<Site> findByName(String name) {
-        return repository.findByName(name);
-    }
-
-
-    @Transactional
-    public void edge(Site site, Direction direction, Site siteB) {
-        template.edge(site, direction.get(), siteB);
-        template.edge(siteB, direction.getReversal(), site);
-
-    }
-
-
-    public Optional<Site> goTo(Site secondRoom, Direction direction) {
-        return template.getTraversalVertex(secondRoom.getId()).out(direction.get()).<Site>next();
-    }
+	public Optional<Site> goTo(Site secondRoom, Direction direction) {
+		return template.getTraversalVertex(secondRoom.getId()).out(direction.get()).<Site>next();
+	}
 }
