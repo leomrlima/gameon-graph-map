@@ -65,6 +65,9 @@ public class Site {
 	@Column
 	private boolean empty;
 
+	@Column
+	private boolean doorAvaiable;
+
 	public Long getId() {
 		return id;
 	}
@@ -157,7 +160,15 @@ public class Site {
 		return weight;
 	}
 
-	@Override
+    public boolean isDoorAvaiable() {
+        return doorAvaiable;
+    }
+
+    public void setDoorAvaiable(boolean doorAvaiable) {
+        this.doorAvaiable = doorAvaiable;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;

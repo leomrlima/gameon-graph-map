@@ -24,7 +24,9 @@ public class App {
 
             siteService.edge(root, Direction.NORH, secondRoom);
             Optional<Site> result = siteService.goTo(secondRoom, Direction.SOUTH);
+            Optional<Site> nextAvialable = siteService.getRecentRoom();
             System.out.println(result);
+            System.out.println(nextAvialable);
         }
     }
 
@@ -48,6 +50,7 @@ public class App {
         site.setOwner("_leo");
         site.setX(1);
         site.setY(0);
+        site.setDoorAvaiable(true);
         site.setName("Second ROOM");
         site.setFullName("The Second ROOM");
         site.setDescription("A helpful room with doors in every possible direction.");
