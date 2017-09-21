@@ -51,7 +51,7 @@ public class SiteService {
 
     public Optional<Site> getRecentRoom() {
 
-        return template.getTraversalVertex().has("doorAvaiable", true)
+        return template.getTraversalVertex().has("doorAvailable", true)
                 .<Site>stream()
                 .sorted(ORDER_WEIGHT)
                 .findFirst();
