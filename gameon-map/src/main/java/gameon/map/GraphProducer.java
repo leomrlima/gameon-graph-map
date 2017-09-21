@@ -19,6 +19,10 @@ import javax.inject.Inject;
 public class GraphProducer {
 
 
+    private static final String SITE = "Site";
+    private static final String NAME = "name";
+    private static final String ID = "id";
+    private static final String DOOR_AVAIABLE = "doorAvaiable";
 
     private Neo4JGraph graph;
 
@@ -33,9 +37,15 @@ public class GraphProducer {
         Neo4JElementIdProvider<?> edgeIdProvider = new Neo4JNativeElementIdProvider();
         this.graph = new Neo4JGraph(driver, vertexIdProvider, edgeIdProvider);
         graph.setProfilerEnabled(true);
+        createIndex();
+    }
+
+    private void createIndex() {
         Transaction transaction = graph.tx();
-        graph.createIndex("Site", "name");
-        graph.createIndex("Site", "id");
+        graph.createIndex(SITE, NAME);
+        graph.createIndex(SITE, ID);
+        graph.createIndex(SITE, DOOR_AVAIABLE);
+
         transaction.commit();
     }
 
