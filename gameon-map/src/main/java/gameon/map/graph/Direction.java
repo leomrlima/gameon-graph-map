@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 public enum Direction implements Supplier<String>, Reversible {
 
-    NORH {
+    NORTH {
         @Override
         public String getReversal() {
             return SOUTH.get();
@@ -12,17 +12,17 @@ public enum Direction implements Supplier<String>, Reversible {
 
         @Override
         public String get() {
-            return "n";
+            return "North";
         }
     }, SOUTH {
         @Override
         public String getReversal() {
-            return NORH.get();
+            return NORTH.get();
         }
 
         @Override
         public String get() {
-            return "s";
+            return "South";
         }
     }, EAST {
         @Override
@@ -32,7 +32,7 @@ public enum Direction implements Supplier<String>, Reversible {
 
         @Override
         public String get() {
-            return "e";
+            return "East";
         }
     }, WEST {
         @Override
@@ -42,7 +42,7 @@ public enum Direction implements Supplier<String>, Reversible {
 
         @Override
         public String get() {
-            return "w";
+            return "West";
         }
     };
 

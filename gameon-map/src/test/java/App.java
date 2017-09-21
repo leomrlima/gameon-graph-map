@@ -22,7 +22,7 @@ public class App {
             Site root = siteService.findByName("First ROOM").get();
             Site secondRoom = siteService.findByName("Second ROOM").get();
 
-            siteService.edge(root, Direction.NORH, secondRoom);
+            siteService.edge(root, Direction.NORTH, secondRoom);
             Optional<Site> result = siteService.goTo(secondRoom, Direction.SOUTH);
             Optional<Site> nextAvialable = siteService.getRecentRoom();
             System.out.println(result);
