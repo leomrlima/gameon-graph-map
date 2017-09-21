@@ -1,11 +1,11 @@
-import java.util.Optional;
-
-import javax.enterprise.inject.se.SeContainer;
-import javax.enterprise.inject.se.SeContainerInitializer;
-
+import gameon.map.graph.Coordinate;
 import gameon.map.graph.Direction;
 import gameon.map.graph.Site;
 import gameon.map.graph.SiteService;
+
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
+import java.util.Optional;
 
 public class App {
 
@@ -33,8 +33,7 @@ public class App {
     private static Site createRoot() {
         Site site = new Site();
         site.setOwner("_leo");
-        site.setX(0);
-        site.setY(0);
+        site.setCoordinate(Coordinate.EMPTY);
         site.setName("First ROOM");
         site.setFullName("The First ROOM");
         site.setDescription("A helpful room with doors in every possible direction.");
@@ -48,8 +47,7 @@ public class App {
     private static Site secondRoom() {
         Site site = new Site();
         site.setOwner("_leo");
-        site.setX(1);
-        site.setY(0);
+        site.setCoordinate(Coordinate.builder().withX(1L).builder());
         site.setDoorAvaiable(true);
         site.setName("Second ROOM");
         site.setFullName("The Second ROOM");
