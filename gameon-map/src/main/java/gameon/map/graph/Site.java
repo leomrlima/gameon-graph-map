@@ -55,13 +55,31 @@ public class Site implements Serializable {
 
 
     @Column
-    private Coordinate coordinate = Coordinate.EMPTY;
+    private Coordinate coordinate;
 
     @Column
     private boolean empty;
 
     @Column
     private boolean doorAvailable;
+
+    Site() {
+    }
+
+    Site(String name, String connectionType, String connectionTarget,
+         String connectionToken, String fullName, String description, String owner,
+         Coordinate coordinate, boolean empty, boolean doorAvailable) {
+        this.name = name;
+        this.connectionType = connectionType;
+        this.connectionTarget = connectionTarget;
+        this.connectionToken = connectionToken;
+        this.fullName = fullName;
+        this.description = description;
+        this.owner = owner;
+        this.coordinate = coordinate;
+        this.empty = empty;
+        this.doorAvailable = doorAvailable;
+    }
 
     public Long getId() {
         return id;
@@ -71,64 +89,36 @@ public class Site implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getConnectionType() {
         return connectionType;
-    }
-
-    public void setConnectionType(String connectionType) {
-        this.connectionType = connectionType;
     }
 
     public String getConnectionTarget() {
         return connectionTarget;
     }
 
-    public void setConnectionTarget(String connectionTarget) {
-        this.connectionTarget = connectionTarget;
-    }
-
     public String getConnectionToken() {
         return connectionToken;
-    }
-
-    public void setConnectionToken(String connectionToken) {
-        this.connectionToken = connectionToken;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     public boolean isEmpty() {
         return empty;
-    }
-
-    public void setEmpty(boolean empty) {
-        this.empty = empty;
     }
 
     public boolean isDoorAvailable() {
@@ -139,16 +129,8 @@ public class Site implements Serializable {
         return ofNullable(coordinate).map(Coordinate::getWeight).orElse(0L);
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public void setDoorAvailable(boolean doorAvailable) {
-        this.doorAvailable = doorAvailable;
+    public static SiteBuilder builder() {
+        return new SiteBuilder();
     }
 
     @Override

@@ -31,32 +31,32 @@ public class App {
     }
 
     private static Site createRoot() {
-        Site site = new Site();
-        site.setOwner("_leo");
-        site.setCoordinate(Coordinate.EMPTY);
-        site.setName("First ROOM");
-        site.setFullName("The First ROOM");
-        site.setDescription("A helpful room with doors in every possible direction.");
-        site.setConnectionTarget("wss://secondroom:9008/barn/ws");
-        site.setConnectionToken("A-totally-arbitrary-really-long-string");
-        site.setConnectionType("websocket");
-        site.setEmpty(false);
-        return site;
+        return Site.builder()
+                .withOwner("_leo")
+                .withCoordinate(Coordinate.EMPTY)
+                .withName("First ROOM")
+                .withFullName("The First ROOM")
+                .withDescription("A helpful room with doors in every possible direction.")
+                .withConnectionTarget("wss://secondroom:9008/barn/ws")
+                .withConnectionToken("A-totally-arbitrary-really-long-string")
+                .withConnectionType("websocket")
+                .withEmpty(false)
+                .build();
+
     }
 
     private static Site secondRoom() {
-        Site site = new Site();
-        site.setOwner("_leo");
-        site.setCoordinate(Coordinate.builder().withX(1L).builder());
-        site.setDoorAvailable(true);
-        site.setName("Second ROOM");
-        site.setFullName("The Second ROOM");
-        site.setDescription("A helpful room with doors in every possible direction.");
-        site.setConnectionTarget("wss://secondroom:9008/barn/ws");
-        site.setConnectionToken("A-totally-arbitrary-really-long-string");
-        site.setConnectionType("websocket");
-        site.setEmpty(false);
-        return site;
+        return Site.builder()
+                .withOwner("_leo")
+                .withCoordinate(Coordinate.builder().withX(1L).builder())
+                .withDoorAvailable(true)
+                .withName("Second ROOM")
+                .withFullName("The Second ROOM")
+                .withDescription("A helpful room with doors in every possible direction.")
+                .withConnectionTarget("wss://secondroom:9008/barn/ws")
+                .withConnectionToken("A-totally-arbitrary-really-long-string")
+                .withConnectionType("websocket")
+                .withEmpty(false).build();
     }
 
 }
