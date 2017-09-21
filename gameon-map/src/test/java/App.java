@@ -48,7 +48,7 @@ public class App {
         Site site = new Site();
         site.setOwner("_leo");
         site.setCoordinate(Coordinate.builder().withX(1L).builder());
-        site.setDoorAvaiable(true);
+        site.setDoorAvailable(true);
         site.setName("Second ROOM");
         site.setFullName("The Second ROOM");
         site.setDescription("A helpful room with doors in every possible direction.");

@@ -61,7 +61,7 @@ public class Site implements Serializable {
     private boolean empty;
 
     @Column
-    private boolean doorAvaiable;
+    private boolean doorAvailable;
 
     public Long getId() {
         return id;
@@ -133,8 +133,8 @@ public class Site implements Serializable {
     }
 
 
-    public boolean isDoorAvaiable() {
-        return doorAvaiable;
+    public boolean isDoorAvailable() {
+        return doorAvailable;
     }
 
     public long getWeight() {
@@ -149,8 +149,8 @@ public class Site implements Serializable {
         this.coordinate = coordinate;
     }
 
-    public void setDoorAvaiable(boolean doorAvaiable) {
-        this.doorAvaiable = doorAvaiable;
+    public void setDoorAvailable(boolean doorAvailable) {
+        this.doorAvailable = doorAvailable;
     }
 
     @Override
@@ -183,7 +183,7 @@ public class Site implements Serializable {
         sb.append(", owner='").append(owner).append('\'');
         sb.append(", coordinate=").append(coordinate);
         sb.append(", empty=").append(empty);
-        sb.append(", doorAvaiable=").append(doorAvaiable);
+        sb.append(", doorAvailable=").append(doorAvailable);
         sb.append('}');
         return sb.toString();
     }
