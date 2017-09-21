@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
+
+import static java.util.Collections.emptyList;
 
 class IndexGraph {
 
@@ -48,5 +51,13 @@ class IndexGraph {
         String[] properties = entry.getValue().toString().split(",");
         indexes.put(key, Arrays.asList(properties));
 
+    }
+
+    public Set<String> getLabels() {
+        return indexes.keySet();
+    }
+
+    public List<String> getProperties(String label) {
+        return indexes.getOrDefault(label, emptyList());
     }
 }

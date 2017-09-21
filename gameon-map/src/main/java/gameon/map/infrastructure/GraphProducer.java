@@ -14,8 +14,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 class GraphProducer {
@@ -43,9 +41,8 @@ class GraphProducer {
 
     private void createIndex() {
         Transaction transaction = graph.tx();
-        for (Map.Entry<String, List<String>> indexes : indexGraph.getIndexes().entrySet()) {
-            String label = indexes.getKey();
-            for (String property : indexes.getValue()) {
+        for (String label: indexGraph.getLabels()) {
+            for (String property : indexGraph.getProperties(label)) {
                 graph.createIndex(label, property);
             }
         }
