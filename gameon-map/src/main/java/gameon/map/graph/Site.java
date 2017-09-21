@@ -67,36 +67,57 @@ public class Site implements Serializable {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getConnectionType() {
+        return connectionType;
+    }
 
     public void setConnectionType(String connectionType) {
         this.connectionType = connectionType;
     }
 
+    public String getConnectionTarget() {
+        return connectionTarget;
+    }
 
     public void setConnectionTarget(String connectionTarget) {
         this.connectionTarget = connectionTarget;
     }
 
+    public String getConnectionToken() {
+        return connectionToken;
+    }
 
     public void setConnectionToken(String connectionToken) {
         this.connectionToken = connectionToken;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getOwner() {
+        return owner;
+    }
 
     public void setOwner(String owner) {
         this.owner = owner;
@@ -110,6 +131,9 @@ public class Site implements Serializable {
         this.empty = empty;
     }
 
+    public boolean isDoorAvailable() {
+        return doorAvailable;
+    }
 
     public long getWeight() {
         return ofNullable(coordinate).map(Coordinate::getWeight).orElse(0L);

@@ -5,7 +5,8 @@
     "settings": {
       "url": "bolt://localhost:7687",
       "admin": "neo4j",
-      "password": "admin"
+      "password": "admin",
+      "Index_Site": "name,id,doorAvailable"
     }
   }
 ]
