@@ -129,6 +129,22 @@ public class Site implements Serializable {
         return ofNullable(coordinate).map(Coordinate::getWeight).orElse(0L);
     }
 
+
+    public void merge(Site site) {
+
+        if (Objects.isNull(id)) {
+            this.id = site.id;
+        }
+        ofNullable(site.name).ifPresent(n -> this.name = n);
+        ofNullable(site.connectionType).ifPresent(n -> this.connectionType = n);
+        ofNullable(site.connectionTarget).ifPresent(n -> this.connectionTarget = n);
+        ofNullable(site.fullName).ifPresent(n -> this.fullName = n);
+        ofNullable(site.description).ifPresent(n -> this.description = n);
+        ofNullable(site.owner).ifPresent(n -> this.owner = n);
+        ofNullable(site.doorAvailable).ifPresent(n -> this.doorAvailable = n);
+
+    }
+
     public static SiteBuilder builder() {
         return new SiteBuilder();
     }
@@ -167,4 +183,6 @@ public class Site implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

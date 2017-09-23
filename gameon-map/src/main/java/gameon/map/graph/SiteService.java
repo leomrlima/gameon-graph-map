@@ -6,8 +6,8 @@ import org.jnosql.artemis.graph.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.Comparator.comparing;
@@ -25,10 +25,15 @@ public class SiteService {
     @Inject
     private GraphTemplate template;
 
+
     @Transactional
     public void save(Site site) {
+        Optional<Site> siteByName = repository.findByName(site.getName());
+        siteByName.ifPresent(site::merge);
         repository.save(site);
     }
+
+
 
     public Optional<Site> findById(String id) {
         return repository.findById(id);
@@ -39,7 +44,7 @@ public class SiteService {
     }
 
     @Transactional
-    public void edge(Site siteA, Direction direction, Site siteB) {
+    public void direction(Site siteA, Direction direction, Site siteB) {
         template.edge(siteA, direction.get(), siteB);
         template.edge(siteB, direction.getReversal(), siteA);
     }
