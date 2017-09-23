@@ -7,7 +7,6 @@ import org.jnosql.artemis.graph.Transactional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.Comparator.comparing;
