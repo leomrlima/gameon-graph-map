@@ -56,6 +56,15 @@ public class SiteResource {
         return SiteDTO.of(site);
     }
 
+    @GET
+    @Path("/{name}")
+    public SiteDTO findByName(@PathParam("name") String name) {
+        Site site = siteService.findByName(name)
+                .orElseThrow(NOT_FOUND_SUPPLIER);
+
+        return SiteDTO.of(site);
+    }
+
     @POST
     public void create(SiteDTO dto) {
 
