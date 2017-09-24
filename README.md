@@ -1,10 +1,8 @@
-# diana-examples
-
-![Diana Project](https://github.com/JNOSQL/jnosql-site/blob/master/images/duke-diana.png)
-Diana examples code
+# gameon-graph-map
 
 
-This project has Diana demonstrations using several provider and the NoSQL API and its specializations.
 
-* Diana-se: The bunch of projects that are using Diana with Java SE.
-* diana-boot: Diana integrated with Spring-Boot technology.
+This project has Game-map demostration using Graph database with Neo4J and JNoSQL
+
+* gameon-map-se: The Project using CDI 2.0 and Java SE
+* gameon-map-ee: A project running with TomEE project.
