@@ -37,6 +37,7 @@
 
     <modules>
         <module>gameon-map</module>
+        <module>gameon-map-se</module>
     </modules>
 
     <dependencies>
