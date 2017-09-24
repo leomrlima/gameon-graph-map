@@ -27,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.function.Supplier;
@@ -57,8 +58,8 @@ public class SiteResource {
     }
 
     @GET
-    @Path("/{name}")
-    public SiteDTO findByName(@PathParam("name") String name) {
+    @Path("/search/")
+    public SiteDTO findByName(@QueryParam("name") String name) {
         Site site = siteService.findByName(name)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
