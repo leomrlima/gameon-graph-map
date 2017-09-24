@@ -22,7 +22,7 @@ public class Site {
     /**
      * Site id
      */
-    private String _id;
+    private String id;
 
     private RoomInfo info;
 
@@ -35,12 +35,12 @@ public class Site {
 
     private RoomType type;
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public RoomInfo getInfo() {
@@ -84,7 +84,7 @@ public class Site {
             return false;
         }
         Site site = (Site) o;
-        return Objects.equals(_id, site._id) &&
+        return Objects.equals(id, site.id) &&
                 Objects.equals(info, site.info) &&
                 Objects.equals(owner, site.owner) &&
                 Objects.equals(coord, site.coord) &&
@@ -93,13 +93,13 @@ public class Site {
 
     @Override
     public int hashCode() {
-        return Objects.hash(_id, info, owner, coord, type);
+        return Objects.hash(id, info, owner, coord, type);
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Site{");
-        sb.append("_id='").append(_id).append('\'');
+        sb.append("id='").append(id).append('\'');
         sb.append(", info=").append(info);
         sb.append(", owner='").append(owner).append('\'');
         sb.append(", coord=").append(coord);
