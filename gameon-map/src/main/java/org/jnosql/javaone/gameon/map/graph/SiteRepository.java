@@ -19,7 +19,7 @@ import org.jnosql.artemis.Repository;
 
 import java.util.Optional;
 
-public interface SiteRepository extends Repository<Site, String> {
+public interface SiteRepository extends Repository<Site, Long> {
 
 
     Optional<Site> findByName(String name);
