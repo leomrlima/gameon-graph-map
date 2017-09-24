@@ -73,4 +73,11 @@ public class CoordinateDTO implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+    public static Coordinate from(CoordinateDTO dto) {
+        if(Objects.isNull(dto)) {
+            return null;
+        }
+        return Coordinate.builder().withX(dto.x).withY(dto.y).builder();
+    }
 }

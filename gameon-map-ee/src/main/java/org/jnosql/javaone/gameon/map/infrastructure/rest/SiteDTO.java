@@ -151,7 +151,17 @@ public class SiteDTO implements Serializable {
     }
 
     public static Site from(SiteDTO dto) {
-        Site.builder().with
+        return Site.builder().withId(dto.id)
+                .withName(dto.name)
+                .withConnectionType(dto.connectionType)
+                .withConnectionTarget(dto.connectionTarget)
+                .withConnectionToken(dto.connectionToken)
+                .withFullName(dto.fullName)
+                .withDescription(dto.description)
+                .withOwner(dto.owner)
+                .withCoordinate(CoordinateDTO.from(dto.coordinate))
+                .withEmpty(dto.empty)
+                .withDoorAvailable(dto.doorAvailable).build();
     }
 
     @Override
