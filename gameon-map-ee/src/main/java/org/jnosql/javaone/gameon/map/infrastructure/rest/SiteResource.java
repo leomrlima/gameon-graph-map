@@ -13,8 +13,25 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package org.jnosql.javaone.gameon.map.rest;
+package org.jnosql.javaone.gameon.map.infrastructure.rest;
 
-public enum RoomType {
-    ROOM, EMPTY
+import org.jnosql.javaone.gameon.map.graph.SiteService;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+@ApplicationScoped
+@Consumes(APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
+@Path("sites")
+public class SiteResource {
+
+
+    @Inject
+    private SiteService siteService;
 }
