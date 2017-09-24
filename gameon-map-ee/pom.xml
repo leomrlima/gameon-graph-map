@@ -27,6 +27,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.ee.version>7.0</java.ee.version>
+        <version.tomee>7.0.3</version.tomee>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -41,6 +49,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <warName>gameon-map</warName>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomee.maven</groupId>
@@ -54,18 +65,13 @@
         </plugins>
     </build>
 
-    <properties>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <version>${java.ee.version}</version>
             <scope>provided</scope>
         </dependency>
 
