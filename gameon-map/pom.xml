@@ -19,6 +19,13 @@
 
     <groupId>org.jnosql.javaone</groupId>
     <artifactId>gameon-map</artifactId>
+    
+    <parent>
+        <groupId>org.jnosql.javaone</groupId>
+        <artifactId>gameon-map-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
 
     <build>
         <plugins>
