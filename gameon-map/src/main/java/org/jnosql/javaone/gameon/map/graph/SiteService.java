@@ -51,7 +51,7 @@ public class SiteService {
     }
 
 
-    public Optional<Site> findById(String id) {
+    public Optional<Site> findById(Long id) {
         return repository.findById(id);
     }
 
