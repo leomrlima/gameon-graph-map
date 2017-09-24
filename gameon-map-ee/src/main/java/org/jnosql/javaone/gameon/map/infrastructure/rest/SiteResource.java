@@ -65,9 +65,12 @@ public class SiteResource {
 
     @Path("/{id}")
     @PUT
-    public void update(@PathParam("id") String id, SiteDTO dto) {
+    public void update(@PathParam("id") Long id, SiteDTO dto) {
         Site site = siteService.findById(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
+
+        site.merge(SiteDTO.from(dto));
+        siteService.save(site);
     }
 
 }
