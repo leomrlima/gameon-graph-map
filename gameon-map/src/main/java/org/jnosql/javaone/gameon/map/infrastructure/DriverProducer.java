@@ -13,7 +13,7 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package gameon.map.infrastructure;
+package org.jnosql.javaone.gameon.map.infrastructure;
 
 import org.jnosql.artemis.ConfigurationUnit;
 import org.jnosql.artemis.configuration.ConfigurationException;

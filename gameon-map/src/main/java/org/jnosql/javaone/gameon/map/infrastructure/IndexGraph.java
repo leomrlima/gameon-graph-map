@@ -13,7 +13,7 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package gameon.map.infrastructure;
+package org.jnosql.javaone.gameon.map.infrastructure;
 
 import java.util.Arrays;
 import java.util.HashMap;

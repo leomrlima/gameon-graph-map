@@ -13,8 +13,9 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package gameon.map.rest;
+package org.jnosql.javaone.gameon.map.graph;
 
-public enum RoomType {
-    ROOM, EMPTY
+public interface Reversible {
+
+    String getReversal();
 }

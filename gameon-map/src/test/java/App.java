@@ -13,10 +13,10 @@
  * Otavio Santana, Leonardo Lima
  */
 
-import gameon.map.graph.Coordinate;
-import gameon.map.graph.Direction;
-import gameon.map.graph.Site;
-import gameon.map.graph.SiteService;
+import org.jnosql.javaone.gameon.map.graph.Coordinate;
+import org.jnosql.javaone.gameon.map.graph.Direction;
+import org.jnosql.javaone.gameon.map.graph.Site;
+import org.jnosql.javaone.gameon.map.graph.SiteService;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;

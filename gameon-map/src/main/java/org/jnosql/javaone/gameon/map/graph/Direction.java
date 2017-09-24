@@ -13,7 +13,7 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package gameon.map.graph;
+package org.jnosql.javaone.gameon.map.graph;
 
 import java.util.function.Supplier;
 
