@@ -17,6 +17,8 @@ package org.jnosql.javaone.gameon.map.graph;
 
 public class SiteBuilder {
 
+    private Long id;
+
     private String name;
 
     private String connectionType;
@@ -38,6 +40,11 @@ public class SiteBuilder {
     private boolean doorAvailable;
 
     SiteBuilder() {
+    }
+
+    public SiteBuilder withId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public SiteBuilder withName(String name) {
@@ -90,7 +97,9 @@ public class SiteBuilder {
         return this;
     }
 
+
+
     public Site build() {
-        return new Site(name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, empty, doorAvailable);
+        return new Site(id, name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, empty, doorAvailable);
     }
 }

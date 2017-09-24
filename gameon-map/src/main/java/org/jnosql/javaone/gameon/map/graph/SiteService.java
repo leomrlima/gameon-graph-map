@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Optional;
 
 import static java.util.Comparator.comparing;
+import static java.util.Objects.isNull;
 import static org.jnosql.artemis.DatabaseType.GRAPH;
 
 @ApplicationScoped
@@ -42,11 +43,12 @@ public class SiteService {
 
     @Transactional
     public void save(Site site) {
-        Optional<Site> siteByName = repository.findByName(site.getName());
-        siteByName.ifPresent(site::merge);
+        if (isNull(site.getId())) {
+            Optional<Site> siteByName = repository.findByName(site.getName());
+            siteByName.ifPresent(site::merge);
+        }
         repository.save(site);
     }
-
 
 
     public Optional<Site> findById(String id) {
