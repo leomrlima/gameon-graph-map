@@ -20,8 +20,8 @@
     <groupId>org.jnosql.javaone</groupId>
     <artifactId>gameon-map-parent</artifactId>
     <packaging>pom</packaging>
-
-    <name>Apache Diana Demo</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Gameon-map-parent</name>
 
     <parent>
         <groupId>org.jnosql</groupId>
@@ -37,8 +37,6 @@
 
     <modules>
         <module>gameon-map</module>
-	<module>gameon-map-se</module>
-	<module>gameon-map-ee</module>
     </modules>
 
     <dependencies>
