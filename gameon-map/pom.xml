@@ -19,7 +19,7 @@
 
     <groupId>org.jnosql.javaone</groupId>
     <artifactId>gameon-map</artifactId>
-    
+
     <parent>
         <groupId>org.jnosql.javaone</groupId>
         <artifactId>gameon-map-parent</artifactId>
