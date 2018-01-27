@@ -1,77 +1,42 @@
 /*
- * Copyright (c) 2017 Otávio Santana, Leonardo Lima and others
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * and Apache License v2.0 which accompanies this distribution.
- * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Apache License v2.0 is available at http://www.opensource.org/licenses/apache2.0.php.
+ * Copyright 2018 Elder Moreas and others
  *
- * You may elect to redistribute this code under either of these licenses.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Otavio Santana, Leonardo Lima
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.jnosql.javaone.gameon.map.infrastructure;
 
-
-import com.steelbridgelabs.oss.neo4j.structure.Neo4JElementIdProvider;
-import com.steelbridgelabs.oss.neo4j.structure.Neo4JGraph;
-import com.steelbridgelabs.oss.neo4j.structure.providers.Neo4JNativeElementIdProvider;
 import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.Transaction;
-import org.jnosql.artemis.ConfigurationUnit;
-import org.neo4j.driver.v1.Driver;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 @ApplicationScoped
-class GraphProducer {
-
-
-    private Neo4JGraph graph;
+public class GraphProducer {
 
     @Inject
-    @ConfigurationUnit
-    private Driver driver;
-
-    @Inject
-    @ConfigurationUnit
-    private IndexGraph indexGraph;
-
-
-    @PostConstruct
-    public void init() {
-        Neo4JElementIdProvider<?> vertexIdProvider = new Neo4JNativeElementIdProvider();
-        Neo4JElementIdProvider<?> edgeIdProvider = new Neo4JNativeElementIdProvider();
-        this.graph = new Neo4JGraph(driver, vertexIdProvider, edgeIdProvider);
-        graph.setProfilerEnabled(true);
-        createIndex();
-    }
-
-    private void createIndex() {
-        Transaction transaction = graph.tx();
-        for (String label: indexGraph.getLabels()) {
-            for (String property : indexGraph.getProperties(label)) {
-                graph.createIndex(label, property);
-            }
-        }
-        transaction.commit();
-    }
+    private GraphSupplier graphSupplier;
 
     @Produces
-    @ApplicationScoped
+    @RequestScoped
     public Graph getGraph() {
-        return graph;
+        return graphSupplier.get();
     }
 
-    public void close(@Disposes Graph graph) throws Exception {
+    public void dispose(@Disposes Graph graph) throws Exception {
         graph.close();
-        driver.close();
     }
 }

@@ -1,27 +1,26 @@
 /*
- * Copyright (c) 2017 Otávio Santana, Leonardo Lima and others
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * and Apache License v2.0 which accompanies this distribution.
- * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Apache License v2.0 is available at http://www.opensource.org/licenses/apache2.0.php.
+ * Copyright 2018 Elder Moreas and others
  *
- * You may elect to redistribute this code under either of these licenses.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Otavio Santana, Leonardo Lima
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
 package org.jnosql.javaone.gameon.map.infrastructure;
 
-import org.jnosql.artemis.ConfigurationException;
+
 import org.jnosql.artemis.ConfigurationReader;
 import org.jnosql.artemis.ConfigurationSettingsUnit;
 import org.jnosql.artemis.ConfigurationUnit;
+import org.jnosql.artemis.configuration.ConfigurationException;
 import org.jnosql.diana.api.Settings;
-import org.neo4j.driver.v1.AuthToken;
-import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -29,10 +28,11 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.Annotated;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.neo4j.driver.v1.GraphDatabase.driver;
 
 @ApplicationScoped
 class DriverProducer {
@@ -41,6 +41,8 @@ class DriverProducer {
 
     @Inject
     private ConfigurationReader configurationReader;
+
+    private final Map<Neo4JConfiguration, Driver> pool = new ConcurrentHashMap<>();
 
 
     @ConfigurationUnit
@@ -53,35 +55,19 @@ class DriverProducer {
 
         Settings settings = getSettings(annotation);
 
-        String url = settings.getOrDefault("url", "bolt://localhost:7687").toString();
-        String user = settings.getOrDefault("admin", "neo4j").toString();
-        String password = settings.getOrDefault("password", "admin").toString();
 
-        AuthToken basic = AuthTokens.basic(user, password);
-        Driver driver = driver(url, basic);
+        Neo4JConfiguration configuration = new Neo4JConfiguration(settings);
 
+        Driver driver = pool.get(configuration);
+
+        if (driver == null) {
+            driver = configuration.getDriver();
+            pool.put(configuration, driver);
+        }
 
         return driver;
     }
 
-    @ConfigurationUnit
-    @Produces
-    IndexGraph getIndexGraph(InjectionPoint injectionPoint) {
-        Annotated annotated = injectionPoint.getAnnotated();
-        ConfigurationUnit annotation = annotated.getAnnotation(ConfigurationUnit.class);
-        LOGGER.info(String.format("Loading index configuration from: %s the file %s",
-                annotation.name(), annotation.fileName()));
-
-        Settings settings = getSettings(annotation);
-
-        IndexGraph indexGraph = new IndexGraph();
-
-        settings.entrySet().stream()
-                .filter(IndexGraph.FILTER)
-                .forEach(indexGraph::add);
-
-        return indexGraph;
-    }
     private Settings getSettings(ConfigurationUnit annotation) {
         try {
             ConfigurationSettingsUnit unit = configurationReader.read(annotation);
