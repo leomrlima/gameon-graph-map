@@ -13,7 +13,7 @@
  * Otavio Santana, Leonardo Lima
  */
 
-package org.jnosql.javaone.gameon.map.rest;
+package org.jnosql.javaone.gameon.map.resource;
 
 import org.jnosql.javaone.gameon.map.Site;
 import org.jnosql.javaone.gameon.map.SiteService;
