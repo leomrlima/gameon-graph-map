@@ -16,6 +16,8 @@
 
 package org.jnosql.javaone.gameon.map.infrastructure;
 
+import org.jboss.weld.context.RequestContext;
+import org.jboss.weld.context.unbound.UnboundLiteral;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
@@ -37,8 +39,13 @@ public class CDIExtension implements TestInstancePostProcessor {
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws IllegalAccessException {
 
+        RequestContext requestContext = CONTAINER.select(RequestContext.class, UnboundLiteral.INSTANCE).get();
+        if (!requestContext.isActive()) {
+            requestContext.activate();
+        }
+
         for (Field field : testInstance.getClass().getDeclaredFields()) {
-            if(field.getAnnotation(Inject.class) != null) {
+            if (field.getAnnotation(Inject.class) != null) {
                 Annotation[] qualifiers = Stream.of(field.getAnnotations())
                         .filter(FILTER)
                         .toArray(Annotation[]::new);
@@ -51,7 +58,6 @@ public class CDIExtension implements TestInstancePostProcessor {
 
 
     }
-
 
 
 }

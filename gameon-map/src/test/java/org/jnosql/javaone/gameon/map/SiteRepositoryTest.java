@@ -20,7 +20,7 @@ public class SiteRepositoryTest {
 
     @Test
     public void shouldSave() {
-        Site mainRoom = Site.builder().withFullName("main room").build();
+        Site mainRoom = Site.builder().withName("main").withFullName("main room").build();
         siteRepository.save(mainRoom);
     }
 
