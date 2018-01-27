@@ -17,20 +17,12 @@ package org.jnosql.javaone.gameon.map.infrastructure;
 
 
 import org.jnosql.artemis.ConfigurationReader;
-import org.jnosql.artemis.ConfigurationSettingsUnit;
-import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.artemis.configuration.ConfigurationException;
-import org.jnosql.diana.api.Settings;
 import org.neo4j.driver.v1.Driver;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.Annotated;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -42,40 +34,18 @@ class DriverProducer {
     @Inject
     private ConfigurationReader configurationReader;
 
-    private final Map<Neo4JConfiguration, Driver> pool = new ConcurrentHashMap<>();
+    private Driver driver;
 
 
-    @ConfigurationUnit
     @Produces
     Driver getDriver(InjectionPoint injectionPoint) {
-        Annotated annotated = injectionPoint.getAnnotated();
-        ConfigurationUnit annotation = annotated.getAnnotation(ConfigurationUnit.class);
-        LOGGER.info(String.format("Loading driver configuration from: %s the file %s",
-                annotation.name(), annotation.fileName()));
-
-        Settings settings = getSettings(annotation);
-
-
-        Neo4JConfiguration configuration = new Neo4JConfiguration(settings);
-
-        Driver driver = pool.get(configuration);
 
         if (driver == null) {
-            driver = configuration.getDriver();
-            pool.put(configuration, driver);
+            LOGGER.info(String.format("Loading driver configuration from"));
+            this.driver = Neo4JConfiguration.DEFAULT.getDriver();
         }
 
         return driver;
     }
 
-    private Settings getSettings(ConfigurationUnit annotation) {
-        try {
-            ConfigurationSettingsUnit unit = configurationReader.read(annotation);
-            return unit.getSettings();
-        } catch (ConfigurationException exp) {
-            LOGGER.log(Level.WARNING, "An error to load configuration", exp);
-            return Settings.of();
-        }
-
-    }
 }
