@@ -16,13 +16,11 @@
 package org.jnosql.javaone.gameon.map.infrastructure;
 
 
-import org.jnosql.artemis.ConfigurationReader;
 import org.neo4j.driver.v1.Driver;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.inject.Inject;
 import java.util.logging.Logger;
 
 
@@ -30,9 +28,6 @@ import java.util.logging.Logger;
 class DriverProducer {
 
     private static final Logger LOGGER = Logger.getLogger(DriverProducer.class.getName());
-
-    @Inject
-    private ConfigurationReader configurationReader;
 
     private Driver driver;
 
