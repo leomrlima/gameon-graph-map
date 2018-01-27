@@ -15,8 +15,8 @@
 
 package org.jnosql.javaone.gameon.map.rest;
 
-import org.jnosql.javaone.gameon.map.graph.Site;
-import org.jnosql.javaone.gameon.map.graph.SiteService;
+import org.jnosql.javaone.gameon.map.Site;
+import org.jnosql.javaone.gameon.map.SiteService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

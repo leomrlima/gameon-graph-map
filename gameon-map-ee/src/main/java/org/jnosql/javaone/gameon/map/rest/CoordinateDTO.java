@@ -14,7 +14,7 @@
  */
 package org.jnosql.javaone.gameon.map.rest;
 
-import org.jnosql.javaone.gameon.map.graph.Coordinate;
+import org.jnosql.javaone.gameon.map.Coordinate;
 
 import java.io.Serializable;
 import java.util.Objects;

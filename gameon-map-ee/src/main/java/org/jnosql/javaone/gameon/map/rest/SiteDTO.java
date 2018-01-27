@@ -15,7 +15,7 @@
 
 package org.jnosql.javaone.gameon.map.rest;
 
-import org.jnosql.javaone.gameon.map.graph.Site;
+import org.jnosql.javaone.gameon.map.Site;
 
 import java.io.Serializable;
 
