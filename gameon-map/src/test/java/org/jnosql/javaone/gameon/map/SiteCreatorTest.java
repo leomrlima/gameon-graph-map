@@ -51,7 +51,7 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToNorth() {
-        String description = "noth gate description";
+        String description = "north gate description";
         String descriptionB = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
@@ -72,17 +72,57 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToSouth() {
+        String description = "south gate description";
+        String descriptionB = "back gate description";
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+        Site site = builder().withName("second").withFullName("Main room site").build();
+        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+
+        main = siteService.findByName("main").get();
+        Site southSite = siteService.findByName("second").get();
+
+        Coordinate coordinate = southSite.getCoordinate();
+        Assertions.assertEquals(-1, coordinate.getY());
+        Assertions.assertEquals(0, coordinate.getX());
+        Assertions.assertEquals(-1, coordinate.getWeight());
 
     }
 
     @Test
     public void shouldCreateToWest() {
+        String description = "west gate description";
+        String descriptionB = "back gate description";
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+        Site site = builder().withName("second").withFullName("Main room site").build();
+        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
 
+        main = siteService.findByName("main").get();
+        Site westSite = siteService.findByName("second").get();
+
+        Coordinate coordinate = westSite.getCoordinate();
+        Assertions.assertEquals(0, coordinate.getY());
+        Assertions.assertEquals(-1, coordinate.getX());
+        Assertions.assertEquals(-1, coordinate.getWeight());
     }
 
     @Test
     public void shouldCreateToEast() {
+        String description = "east gate description";
+        String descriptionB = "back gate description";
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+        Site site = builder().withName("second").withFullName("Main room site").build();
+        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
 
+        main = siteService.findByName("main").get();
+        Site eastSite = siteService.findByName("second").get();
+
+        Coordinate coordinate = eastSite.getCoordinate();
+        Assertions.assertEquals(0, coordinate.getY());
+        Assertions.assertEquals(-1, coordinate.getX());
+        Assertions.assertEquals(-1, coordinate.getWeight());
     }
 
 

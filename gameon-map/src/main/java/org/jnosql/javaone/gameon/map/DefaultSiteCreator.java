@@ -63,16 +63,15 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         Objects.requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
-        Coordinate newCoordinate = Coordinate.builder().withX(coordinate.getX()).withY(coordinate.getY() + 1).builder();
-        to.setCoordinate(newCoordinate);
+        to.setCoordinate(coordinate.toNorth());
         siteService.create(to);
         to = siteService.findByName(to.getName()).get();
-        EdgeEntity edge = graphTemplate.edge(from, NORTH, to);
-        EdgeEntity edge1 = graphTemplate.edge(to, NORTH.getReversal(), from);
+        EdgeEntity edgeForward = graphTemplate.edge(from, NORTH, to);
+        EdgeEntity edgeRollback = graphTemplate.edge(to, NORTH.getReversal(), from);
 
 
-        edge.add("description", forward);
-        edge1.add("description", rollback);
+        edgeForward.add("description", forward);
+        edgeRollback.add("description", rollback);
 
     }
 
