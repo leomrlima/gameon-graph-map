@@ -18,6 +18,7 @@ package org.jnosql.javaone.gameon.map.resource;
 import org.jnosql.javaone.gameon.map.Name;
 import org.jnosql.javaone.gameon.map.Site;
 import org.jnosql.javaone.gameon.map.SiteService;
+import org.jnosql.javaone.gameon.map.validation.ValidName;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -53,7 +54,7 @@ public class SiteResource {
 
     @GET
     @Path("/{id}")
-    public SiteDTO findById(@PathParam("id") String id) {
+    public SiteDTO findById(@PathParam("id") @Valid @ValidName String id) {
         Site site = siteService.findByName(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
@@ -62,7 +63,7 @@ public class SiteResource {
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") String id) {
+    public void delete(@PathParam("id") @Valid @ValidName String id) {
         siteService.deleteByName(id);
     }
 
@@ -79,7 +80,7 @@ public class SiteResource {
 
     @Path("/{id}")
     @PUT
-    public void update(@PathParam("id") String id, SiteDTO dto) {
+    public void update(@PathParam("id") @Valid @ValidName String id, @Valid SiteDTO dto) {
         Site site = siteService.findByName(Name.of(id).get())
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 

@@ -37,7 +37,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @NotNull
 @Size(min = 3, max = 50)
 @ReportAsSingleViolation
-public @interface Name {
+public @interface ValidName {
 
     String message() default "invalid name";
 

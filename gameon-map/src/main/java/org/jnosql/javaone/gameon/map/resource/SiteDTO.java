@@ -16,13 +16,13 @@
 package org.jnosql.javaone.gameon.map.resource;
 
 import org.jnosql.javaone.gameon.map.Site;
-import org.jnosql.javaone.gameon.map.validation.Name;
+import org.jnosql.javaone.gameon.map.validation.ValidName;
 
 import java.io.Serializable;
 
 public class SiteDTO implements Serializable {
 
-    @Name
+    @ValidName
     private String name;
 
     private String connectionType;
