@@ -16,8 +16,10 @@
 package org.jnosql.javaone.gameon.map;
 
 import org.jnosql.artemis.Column;
+import org.jnosql.artemis.Convert;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
+import org.jnosql.javaone.gameon.map.infrastructure.NameConverter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -31,7 +33,8 @@ public class Site implements Serializable {
     private Long id;
 
     @Column
-    private String name;
+    @Convert(NameConverter.class)
+    private Name name;
 
     /**
      * Connection type
@@ -89,7 +92,7 @@ public class Site implements Serializable {
          boolean doorAvailable) {
 
         this.id = id;
-        this.name = name;
+        this.name = Name.of(name);
         this.connectionType = connectionType;
         this.connectionTarget = connectionTarget;
         this.connectionToken = connectionToken;
@@ -106,7 +109,7 @@ public class Site implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 
     public String getConnectionType() {
