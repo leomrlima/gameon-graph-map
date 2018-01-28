@@ -65,6 +65,7 @@ public class SiteService {
     }
 
 
+
     public Optional<Site> getRecentRoom() {
 
         return template.getTraversalVertex().has("doorAvailable", true)
