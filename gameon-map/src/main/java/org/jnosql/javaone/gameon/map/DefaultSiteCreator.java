@@ -17,8 +17,7 @@ package org.jnosql.javaone.gameon.map;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
 
-import java.util.Objects;
-
+import static java.util.Objects.requireNonNull;
 import static org.jnosql.javaone.gameon.map.Direction.EAST;
 import static org.jnosql.javaone.gameon.map.Direction.NORTH;
 import static org.jnosql.javaone.gameon.map.Direction.SOUTH;
@@ -41,7 +40,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public SiteFromCreator to(Site site) throws NullPointerException {
-        Objects.requireNonNull(site, "iste is required");
+        requireNonNull(site, "iste is required");
         siteService.findByName(site.getName())
                 .ifPresent(c -> {
                     throw new IllegalArgumentException("Site Already does exist: " + site.getName());
@@ -53,7 +52,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public SiteDestination from(String name) throws NullPointerException {
-        Objects.requireNonNull(name, "name is required");
+        requireNonNull(name, "name is required");
 
         this.from = siteService.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("Site does not found" + name));
@@ -62,8 +61,8 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void north(String forward, String rollback) throws NullPointerException {
-        Objects.requireNonNull(forward, "description is required");
-        Objects.requireNonNull(rollback, "rollback is required");
+        requireNonNull(forward, "description is required");
+        requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
         to.setCoordinate(coordinate.toNorth());
@@ -80,8 +79,8 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void south(String forward, String rollback) throws NullPointerException {
-        Objects.requireNonNull(forward, "description is required");
-        Objects.requireNonNull(rollback, "rollback is required");
+        requireNonNull(forward, "description is required");
+        requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
         to.setCoordinate(coordinate.toSouth());
@@ -97,8 +96,8 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void west(String forward, String rollback) throws NullPointerException {
-        Objects.requireNonNull(forward, "description is required");
-        Objects.requireNonNull(rollback, "rollback is required");
+        requireNonNull(forward, "description is required");
+        requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
         to.setCoordinate(coordinate.toWest());
@@ -114,8 +113,8 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void east(String forward, String rollback) throws NullPointerException {
-        Objects.requireNonNull(forward, "description is required");
-        Objects.requireNonNull(rollback, "rollback is required");
+        requireNonNull(forward, "description is required");
+        requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
         to.setCoordinate(coordinate.toEast());
