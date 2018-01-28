@@ -32,5 +32,7 @@ public interface SiteCreator {
         void  west(String forward, String backward) throws NullPointerException;
 
         void  east(String forward, String backward) throws NullPointerException;
+
+        void by(Direction direction);
     }
 }

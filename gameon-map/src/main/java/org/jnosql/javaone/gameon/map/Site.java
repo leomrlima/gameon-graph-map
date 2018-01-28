@@ -152,6 +152,17 @@ public class Site implements Serializable {
     }
 
 
+    public void replaceWith(Site site) {
+        this.connectionType = ofNullable(this.connectionType).orElse(site.connectionType);
+        this.connectionTarget = ofNullable(this.connectionTarget).orElse(site.connectionTarget);
+        this.connectionToken = ofNullable(this.connectionToken).orElse(site.connectionToken);
+
+        this.fullName = ofNullable(this.fullName).orElse(site.fullName);
+        this.description = ofNullable(this.description).orElse(site.description);
+        this.owner = ofNullable(this.owner).orElse(site.owner);
+        this.empty = false;
+    }
+
     public void merge(Site site) {
 
         if (Objects.isNull(id)) {
@@ -173,6 +184,10 @@ public class Site implements Serializable {
 
     void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
+    }
+
+    void doorUnavailable() {
+        this.doorAvailable = false;
     }
 
     public static SiteBuilder builder() {

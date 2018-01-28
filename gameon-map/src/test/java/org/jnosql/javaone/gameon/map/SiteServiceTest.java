@@ -114,4 +114,18 @@ public class SiteServiceTest {
         Assertions.assertEquals("main", recentRoom.map(Site::getName).orElse(""));
     }
 
+    @Test
+    public void shouldCreateNextRoom() {
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        main = siteService.findByName("main").get();
+
+        Site second = builder().withName("second").withFullName("second room").build();
+        siteService.place(second);
+
+        Site site = siteService.goTo(main, Direction.NORTH).get();
+        Assertions.assertEquals(site.getName(), second.getName());
+    }
+
 }

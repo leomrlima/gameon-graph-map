@@ -103,6 +103,21 @@ public class Coordinate implements Serializable {
         return new CoordinateBuilder();
     }
 
+    public Coordinate to(Direction direction) {
+        switch (direction) {
+            case EAST:
+                return toEast();
+            case WEST:
+                return toWest();
+            case NORTH:
+                return toNorth();
+            case SOUTH:
+                return toSouth();
+            default:
+                throw new IllegalArgumentException("Direction does not map");
+        }
+    }
+
     public static class CoordinateBuilder {
 
         private long x;

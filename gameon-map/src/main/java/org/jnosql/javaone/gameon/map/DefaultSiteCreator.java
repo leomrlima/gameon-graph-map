@@ -88,6 +88,24 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         implDirection(forward, backward, Coordinate::toEast, EAST);
     }
 
+    @Override
+    public void by(Direction direction) {
+        check();
+
+        Coordinate coordinate = from.getCoordinate();
+        to.setCoordinate(coordinate.to(direction));
+        siteService.create(to);
+        to = siteService.findByName(to.getName()).get();
+        graphTemplate.edge(from, direction, to);
+        graphTemplate.edge(to, direction.getReverse(), from);
+
+        //map to
+        //check if all in from is avialable;
+
+        this.isValid = false;
+
+    }
+
     private void implDirection(String forward, String backward, UnaryOperator<Coordinate> operator,
                                  Direction direction) {
 

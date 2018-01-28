@@ -15,19 +15,22 @@
 
 package org.jnosql.javaone.gameon.map;
 
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.jnosql.artemis.Database;
+import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
 import org.jnosql.artemis.graph.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
+import static org.apache.tinkerpop.gremlin.structure.Direction.OUT;
 import static org.jnosql.artemis.DatabaseType.GRAPH;
 
 @ApplicationScoped
@@ -99,4 +102,29 @@ public class SiteService {
     }
 
 
+    public void place(Site site) {
+        Site recentRoom = getRecentRoom().get();
+
+        if (recentRoom.isEmpty()) {
+            recentRoom.replaceWith(site);
+            repository.save(recentRoom);
+            return;
+        }
+
+        Collection<EdgeEntity> edges = template.getEdges(recentRoom, OUT);
+        EnumSet<Direction> directions = EnumSet.allOf(Direction.class);
+        edges.stream().map(EdgeEntity::getLabel).map(Direction::valueOf)
+                .forEach(directions::remove);
+
+        Direction next = directions.iterator().next();
+
+        getNewSiteCreator().to(site).from(recentRoom.getName()).by(next);
+
+        if (directions.size() == 1) {
+            recentRoom.doorUnavailable();
+            repository.save(recentRoom);
+        }
+
+
+    }
 }

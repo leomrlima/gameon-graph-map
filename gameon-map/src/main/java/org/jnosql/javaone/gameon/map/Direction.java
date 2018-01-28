@@ -15,6 +15,8 @@
 
 package org.jnosql.javaone.gameon.map;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public enum Direction implements Supplier<String>, Reversible {
