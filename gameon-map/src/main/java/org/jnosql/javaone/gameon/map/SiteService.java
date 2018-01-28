@@ -51,9 +51,11 @@ public class SiteService {
     }
 
 
-    public Optional<Site> findById(Long id) {
-        return repository.findById(id);
+    @Transactional
+    public void create(Site site) {
+
     }
+
 
     public Optional<Site> findByName(String name) {
         return repository.findByName(name);
@@ -73,5 +75,6 @@ public class SiteService {
                 .sorted(ORDER_WEIGHT)
                 .findFirst();
     }
+
 
 }

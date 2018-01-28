@@ -151,18 +151,18 @@ public class SiteDTO implements Serializable {
         return dto;
     }
 
-    public static Site from(SiteDTO dto) {
-        return Site.builder().withId(dto.id)
-                .withName(dto.name)
-                .withConnectionType(dto.connectionType)
-                .withConnectionTarget(dto.connectionTarget)
-                .withConnectionToken(dto.connectionToken)
-                .withFullName(dto.fullName)
-                .withDescription(dto.description)
-                .withOwner(dto.owner)
-                .withCoordinate(CoordinateDTO.from(dto.coordinate))
-                .withEmpty(dto.empty)
-                .withDoorAvailable(dto.doorAvailable).build();
+    public Site toSite() {
+        return Site.builder().withId(id)
+                .withName(name)
+                .withConnectionType(connectionType)
+                .withConnectionTarget(connectionTarget)
+                .withConnectionToken(connectionToken)
+                .withFullName(fullName)
+                .withDescription(description)
+                .withOwner(owner)
+                .withCoordinate(CoordinateDTO.from(coordinate))
+                .withEmpty(empty)
+                .withDoorAvailable(doorAvailable).build();
     }
 
     @Override

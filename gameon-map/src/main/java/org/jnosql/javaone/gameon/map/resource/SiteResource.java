@@ -20,6 +20,7 @@ import org.jnosql.javaone.gameon.map.SiteService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,6 +31,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -59,11 +61,8 @@ public class SiteResource {
 
 
     @POST
-    public void create(SiteDTO dto) {
-
-
-        Site site = SiteDTO.from(dto);
-        siteService.save(site);
+    public void create(@Valid  SiteDTO dto) {
+        siteService.create(dto.ti);
     }
 
     @Path("/{id}")
@@ -72,7 +71,7 @@ public class SiteResource {
         Site site = siteService.findByName(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
-        site.merge(SiteDTO.from(dto));
+        site.merge(dto.toSite());
         siteService.save(site);
     }
 
