@@ -25,9 +25,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
-import java.util.Optional;
-
 import static org.jnosql.javaone.gameon.map.Site.builder;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(CDIExtension.class)
@@ -64,6 +63,7 @@ public class SiteServiceTest {
         Assertions.assertEquals("The site name already does exist: main", exception.getMessage());
     }
 
+
     @Test
     public void shouldUpdateSite() {
         String newFullName = "update Main room site";
@@ -76,7 +76,11 @@ public class SiteServiceTest {
         Site updatedSite = siteService.findByName("main").orElseThrow(() -> new NullPointerException("Cannot be null"));
         Assertions.assertEquals(newFullName, updatedSite.getFullName());
 
+    }
 
+    @Test
+    public void shouldCreateNewSite() {
+        assertNotNull(siteService.getNewSiteCreator());
     }
 
 }

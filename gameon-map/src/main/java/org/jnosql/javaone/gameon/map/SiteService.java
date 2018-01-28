@@ -72,18 +72,18 @@ public class SiteService {
     }
 
     public Optional<Site> goTo(Site site, Direction direction) {
-
         requireNonNull(site, "site is required");
         requireNonNull(direction, "direction is required");
-
         return template.getTraversalVertex(site.getId()).out(direction).<Site>next();
     }
 
 
+    public SiteCreator getNewSiteCreator() {
+        return new DefaultSiteCreator(this);
+    }
 
 
     public Optional<Site> getRecentRoom() {
-
         return template.getTraversalVertex().has("doorAvailable", true)
                 .<Site>stream()
                 .sorted(ORDER_WEIGHT)
