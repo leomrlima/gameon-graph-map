@@ -51,12 +51,12 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToNorth() {
-        String description = "north gate description";
-        String descriptionB = "back gate description";
+        String forward = "north gate description";
+        String rollback = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").north(forward, rollback);
 
         main = siteService.findByName("main").get();
         Site northSite = siteService.findByName("second").get();
@@ -72,12 +72,12 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToSouth() {
-        String description = "south gate description";
-        String descriptionB = "back gate description";
+        String forward = "south gate description";
+        String rollback = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").south(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").south(forward, rollback);
 
         Site southSite = siteService.findByName("second").get();
 
@@ -90,12 +90,12 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToWest() {
-        String description = "west gate description";
-        String descriptionB = "back gate description";
+        String forward = "west gate description";
+        String rollback = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").west(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").west(forward, rollback);
 
         Site westSite = siteService.findByName("second").get();
 
@@ -107,12 +107,12 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToEast() {
-        String description = "east gate description";
-        String descriptionB = "back gate description";
+        String forward = "east gate description";
+        String rollback = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").east(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").east(forward, rollback);
 
         Site eastSite = siteService.findByName("second").get();
 
@@ -120,6 +120,22 @@ public class SiteCreatorTest {
         Assertions.assertEquals(0, coordinate.getY());
         Assertions.assertEquals(1, coordinate.getX());
         Assertions.assertEquals(1, coordinate.getWeight());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenUseCreatorTwice() {
+        String forward = "east gate description";
+        String rollback = "back gate description";
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+        Site site = builder().withName("second").withFullName("Main room site").build();
+        SiteCreator siteCreator = siteService.getNewSiteCreator();
+        siteCreator.to(site).from("main").east(forward, rollback);
+
+        Site third = builder().withName("third").withFullName("Main room site").build();
+        Assertions.assertThrows(IllegalStateException.class, () ->{
+            siteCreator.to(third).from("main").east(forward, rollback);
+        });
     }
 
 

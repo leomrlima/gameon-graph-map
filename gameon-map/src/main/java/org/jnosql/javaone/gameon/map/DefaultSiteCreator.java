@@ -32,7 +32,10 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     private Site from;
 
     private final SiteService siteService;
+
     private final GraphTemplate graphTemplate;
+
+    private boolean isValid = true;
 
     DefaultSiteCreator(SiteService siteService, GraphTemplate graphTemplate) {
         this.siteService = siteService;
@@ -42,6 +45,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public SiteFromCreator to(Site site) throws NullPointerException {
+        check();
         requireNonNull(site, "iste is required");
         siteService.findByName(site.getName())
                 .ifPresent(c -> {
@@ -54,6 +58,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public SiteDestination from(String name) throws NullPointerException {
+        check();
         requireNonNull(name, "name is required");
 
         this.from = siteService.findByName(name)
@@ -86,6 +91,8 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     private void implDirection(String forward, String rollback, UnaryOperator<Coordinate> operator,
                                  Direction direction) {
 
+
+        check();
         requireNonNull(forward, "description is required");
         requireNonNull(rollback, "rollback is required");
 
@@ -98,5 +105,13 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         edgeForward.add("description", forward);
         edgeRollback.add("description", rollback);
 
+        this.isValid = false;
+
+    }
+
+    private void check() {
+        if(!isValid) {
+            throw new IllegalStateException("This creation flow has finished, you need to create a new one.");
+        }
     }
 }
