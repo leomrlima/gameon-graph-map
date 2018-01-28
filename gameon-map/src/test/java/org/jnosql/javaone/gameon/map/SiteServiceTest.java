@@ -26,8 +26,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import javax.inject.Inject;
 
 import static org.jnosql.javaone.gameon.map.Site.builder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(CDIExtension.class)
 public class SiteServiceTest {
@@ -49,7 +51,7 @@ public class SiteServiceTest {
 
         Site site = builder().withName("main").withFullName("Main room site").build();
         siteService.create(site);
-        Assertions.assertTrue(siteService.findByName(site.getName()).isPresent());
+        assertTrue(siteService.findByName(site.getName()).isPresent());
     }
 
     @Test
@@ -60,7 +62,7 @@ public class SiteServiceTest {
             siteService.create(site);
         });
 
-        Assertions.assertEquals("The site name already does exist: main", exception.getMessage());
+        assertEquals("The site name already does exist: main", exception.getMessage());
     }
 
 
@@ -74,13 +76,32 @@ public class SiteServiceTest {
         siteService.update(builder().withName("main").withFullName(newFullName).build());
 
         Site updatedSite = siteService.findByName("main").orElseThrow(() -> new NullPointerException("Cannot be null"));
-        Assertions.assertEquals(newFullName, updatedSite.getFullName());
+        assertEquals(newFullName, updatedSite.getFullName());
 
     }
 
     @Test
     public void shouldCreateNewSite() {
         assertNotNull(siteService.getNewSiteCreator());
+    }
+
+    @Test
+    public void shouldGoTo() {
+        String forward = "west gate description";
+        String rollback = "back gate description";
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+        Site site = builder().withName("second").withFullName("Main room site").build();
+        siteService.getNewSiteCreator().to(site).from("main").west(forward, rollback);
+
+        Site eastSite = siteService.findByName("second").get();
+        main = siteService.findByName("main").get();
+        Site result = siteService.goTo(main, Direction.WEST).get();
+        Site resultB = siteService.goTo(eastSite, Direction.EAST).get();
+
+        assertEquals(eastSite.getId(), result.getId());
+        assertEquals(main.getId(), resultB.getId());
+
     }
 
 }
