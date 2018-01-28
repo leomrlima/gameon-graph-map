@@ -53,7 +53,10 @@ public class SiteService {
 
     @Transactional
     public void create(Site site) {
-
+        repository.findByName(site.getName()).ifPresent(c ->{
+            throw new IllegalArgumentException("The site name already does exist: " + site.getName());
+        });
+        repository.save(site);
     }
 
 
