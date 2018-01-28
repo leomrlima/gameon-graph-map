@@ -15,6 +15,7 @@
 
 package org.jnosql.javaone.gameon.map.resource;
 
+import org.jnosql.javaone.gameon.map.Name;
 import org.jnosql.javaone.gameon.map.Site;
 import org.jnosql.javaone.gameon.map.SiteService;
 
@@ -52,7 +53,7 @@ public class SiteResource {
     @GET
     @Path("/{id}")
     public SiteDTO findById(@PathParam("id") String id) {
-        Site site = siteService.findByName(id)
+        Site site = siteService.findByName(Name.of(id).get())
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         return SiteDTO.of(site);
@@ -72,7 +73,7 @@ public class SiteResource {
     @Path("/{id}")
     @PUT
     public void update(@PathParam("id") String id, SiteDTO dto) {
-        Site site = siteService.findByName(id)
+        Site site = siteService.findByName(Name.of(id).get())
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         site.merge(dto.toSite());

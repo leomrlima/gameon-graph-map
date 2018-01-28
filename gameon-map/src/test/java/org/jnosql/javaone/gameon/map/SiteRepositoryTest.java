@@ -8,10 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(CDIExtension.class)
 public class SiteRepositoryTest {
+
+    private static final String SITE_NAME = "main";
 
     @Inject
     @Database(DatabaseType.GRAPH)
@@ -20,8 +23,24 @@ public class SiteRepositoryTest {
 
     @Test
     public void shouldSave() {
-        Site mainRoom = Site.builder().withName("main").withFullName("main room").build();
+        Site mainRoom = Site.builder().withName(SITE_NAME).withFullName("main room").build();
         siteRepository.save(mainRoom);
+    }
+
+    @Test
+    public void shouldFindByName() {
+        Site mainRoom = Site.builder().withName(SITE_NAME).withFullName("main room").build();
+        siteRepository.save(mainRoom);
+        assertTrue(siteRepository.findByName(SITE_NAME).isPresent());
+    }
+
+    @Test
+    public void shouldDeleteByName() {
+        Site mainRoom = Site.builder().withName(SITE_NAME).withFullName("main room").build();
+        siteRepository.save(mainRoom);
+        assertTrue(siteRepository.findByName(SITE_NAME).isPresent());
+        siteRepository.deleteByName(SITE_NAME);
+        assertFalse(siteRepository.findByName(SITE_NAME).isPresent());
     }
 
 }
