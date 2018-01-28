@@ -19,7 +19,10 @@ import org.jnosql.artemis.graph.GraphTemplate;
 
 import java.util.Objects;
 
+import static org.jnosql.javaone.gameon.map.Direction.EAST;
 import static org.jnosql.javaone.gameon.map.Direction.NORTH;
+import static org.jnosql.javaone.gameon.map.Direction.SOUTH;
+import static org.jnosql.javaone.gameon.map.Direction.WEST;
 
 class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, SiteCreator.SiteDestination {
 
@@ -41,7 +44,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         Objects.requireNonNull(site, "iste is required");
         siteService.findByName(site.getName())
                 .ifPresent(c -> {
-                    throw new IllegalStateException("Site Already does exist: " + site.getName());
+                    throw new IllegalArgumentException("Site Already does exist: " + site.getName());
                 });
 
         this.to = site;
@@ -79,17 +82,50 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     public void south(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
+
+        Coordinate coordinate = from.getCoordinate();
+        to.setCoordinate(coordinate.toSouth());
+        siteService.create(to);
+        to = siteService.findByName(to.getName()).get();
+        EdgeEntity edgeForward = graphTemplate.edge(from, SOUTH, to);
+        EdgeEntity edgeRollback = graphTemplate.edge(to, SOUTH.getReversal(), from);
+
+
+        edgeForward.add("description", forward);
+        edgeRollback.add("description", rollback);
     }
 
     @Override
     public void west(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
+
+        Coordinate coordinate = from.getCoordinate();
+        to.setCoordinate(coordinate.toWest());
+        siteService.create(to);
+        to = siteService.findByName(to.getName()).get();
+        EdgeEntity edgeForward = graphTemplate.edge(from, WEST, to);
+        EdgeEntity edgeRollback = graphTemplate.edge(to, WEST.getReversal(), from);
+
+
+        edgeForward.add("description", forward);
+        edgeRollback.add("description", rollback);
     }
 
     @Override
     public void east(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
+
+        Coordinate coordinate = from.getCoordinate();
+        to.setCoordinate(coordinate.toEast());
+        siteService.create(to);
+        to = siteService.findByName(to.getName()).get();
+        EdgeEntity edgeForward = graphTemplate.edge(from, EAST, to);
+        EdgeEntity edgeRollback = graphTemplate.edge(to, EAST.getReversal(), from);
+
+
+        edgeForward.add("description", forward);
+        edgeRollback.add("description", rollback);
     }
 }

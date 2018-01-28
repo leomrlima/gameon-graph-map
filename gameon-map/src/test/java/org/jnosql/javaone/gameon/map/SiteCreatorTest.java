@@ -77,9 +77,8 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").south(description, descriptionB);
 
-        main = siteService.findByName("main").get();
         Site southSite = siteService.findByName("second").get();
 
         Coordinate coordinate = southSite.getCoordinate();
@@ -96,9 +95,8 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").west(description, descriptionB);
 
-        main = siteService.findByName("main").get();
         Site westSite = siteService.findByName("second").get();
 
         Coordinate coordinate = westSite.getCoordinate();
@@ -114,15 +112,14 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+        siteService.getNewSiteCreator().to(site).from("main").east(description, descriptionB);
 
-        main = siteService.findByName("main").get();
         Site eastSite = siteService.findByName("second").get();
 
         Coordinate coordinate = eastSite.getCoordinate();
         Assertions.assertEquals(0, coordinate.getY());
-        Assertions.assertEquals(-1, coordinate.getX());
-        Assertions.assertEquals(-1, coordinate.getWeight());
+        Assertions.assertEquals(1, coordinate.getX());
+        Assertions.assertEquals(1, coordinate.getWeight());
     }
 
 
