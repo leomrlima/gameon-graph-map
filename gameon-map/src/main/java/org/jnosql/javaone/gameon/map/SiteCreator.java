@@ -22,16 +22,17 @@ public interface SiteCreator {
 
 
     interface SiteFromCreator {
-        SiteFromCreator from(String name) throws NullPointerException, IllegalStateException;
+        SiteDestination from(String name) throws NullPointerException, IllegalStateException;
     }
 
     interface SiteDestination {
-        EdgeEntity north();
 
-        EdgeEntity south();
+        EdgeEntity north(String description) throws NullPointerException;
 
-        EdgeEntity west();
+        EdgeEntity south(String description) throws NullPointerException;
 
-        EdgeEntity east();
+        EdgeEntity west(String description) throws NullPointerException;
+
+        EdgeEntity east(String description) throws NullPointerException;
     }
 }

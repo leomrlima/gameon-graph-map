@@ -24,7 +24,7 @@ import java.util.Objects;
 @Embeddable
 public class Coordinate implements Serializable {
 
-    public static final Coordinate EMPTY = new Coordinate();
+    public static final Coordinate MAIN = new Coordinate();
 
     @Column
     private long x;
