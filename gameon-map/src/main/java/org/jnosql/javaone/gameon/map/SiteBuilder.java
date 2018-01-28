@@ -33,9 +33,9 @@ public class SiteBuilder {
 
     private Coordinate coordinate;
 
-    private boolean empty;
+    private boolean empty = false;
 
-    private boolean doorAvailable;
+    private boolean doorAvailable = true;
 
     SiteBuilder() {
     }

@@ -126,7 +126,7 @@ public class Coordinate implements Serializable {
             Coordinate coordinate = new Coordinate();
             coordinate.x = x;
             coordinate.y = y;
-            coordinate.weight = y + x;
+            coordinate.weight = Math.abs(y + x);
             return coordinate;
         }
     }

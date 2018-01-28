@@ -15,6 +15,7 @@
 
 package org.jnosql.javaone.gameon.map;
 
+import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.jnosql.artemis.Database;
 import org.jnosql.artemis.graph.GraphTemplate;
 import org.jnosql.artemis.graph.Transactional;
@@ -23,6 +24,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
@@ -85,7 +87,12 @@ public class SiteService {
 
 
     public Optional<Site> getRecentRoom() {
-        return template.getTraversalVertex().has("doorAvailable", true)
+
+        Predicate<Site> isEmpty = Site::isEmpty;
+        Predicate<Site> isDoorAvailable = Site::isDoorAvailable;
+
+        return template.getTraversalVertex()
+                .filter(isEmpty.or(isDoorAvailable))
                 .<Site>stream()
                 .sorted(ORDER_WEIGHT)
                 .findFirst();

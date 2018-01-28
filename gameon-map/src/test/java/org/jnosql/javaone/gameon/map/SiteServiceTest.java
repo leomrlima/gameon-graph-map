@@ -25,6 +25,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
+import java.util.Optional;
+
 import static org.jnosql.javaone.gameon.map.Site.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -101,7 +103,15 @@ public class SiteServiceTest {
 
         assertEquals(eastSite.getId(), result.getId());
         assertEquals(main.getId(), resultB.getId());
+    }
 
+    @Test
+    public void shouldReturnMainRoom() {
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        Optional<Site> recentRoom = siteService.getRecentRoom();
+        Assertions.assertEquals("main", recentRoom.map(Site::getName).orElse(""));
     }
 
 }
