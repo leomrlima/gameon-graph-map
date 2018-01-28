@@ -62,13 +62,9 @@ public class SiteResource {
 
     @DELETE
     @Path("/{id}")
-    public SiteDTO delete(@PathParam("id") String id) {
-        Site site = siteService.deleteByName(id)
-                .orElseThrow(NOT_FOUND_SUPPLIER);
-
-        return SiteDTO.of(site);
+    public void delete(@PathParam("id") String id) {
+        siteService.deleteByName(id);
     }
-
 
 
     @POST
