@@ -61,9 +61,12 @@ public class SiteService {
 
 
     public Optional<Site> findByName(String name) {
-        return repository.findByName(name);
+        return repository.findByName(Name.of(name).get());
     }
 
+    public void deleteByName(String name) {
+        repository.deleteByName(Name.of(name).get());
+    }
 
     public Optional<Site> goTo(Site site, Direction direction) {
         return template.getTraversalVertex(site.getId()).out(direction).<Site>next();
@@ -78,6 +81,7 @@ public class SiteService {
                 .sorted(ORDER_WEIGHT)
                 .findFirst();
     }
+
 
 
 }

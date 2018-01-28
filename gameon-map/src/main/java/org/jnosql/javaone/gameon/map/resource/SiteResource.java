@@ -23,6 +23,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -53,11 +54,21 @@ public class SiteResource {
     @GET
     @Path("/{id}")
     public SiteDTO findById(@PathParam("id") String id) {
-        Site site = siteService.findByName(Name.of(id).get())
+        Site site = siteService.findByName(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         return SiteDTO.of(site);
     }
+
+    @DELETE
+    @Path("/{id}")
+    public SiteDTO delete(@PathParam("id") String id) {
+        Site site = siteService.deleteByName(id)
+                .orElseThrow(NOT_FOUND_SUPPLIER);
+
+        return SiteDTO.of(site);
+    }
+
 
 
     @POST
