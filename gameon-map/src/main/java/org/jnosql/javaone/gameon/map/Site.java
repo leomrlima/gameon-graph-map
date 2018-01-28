@@ -203,12 +203,12 @@ public class Site implements Serializable {
             return false;
         }
         Site site = (Site) o;
-        return Objects.equals(name, site.name) && Objects.equals(owner, site.owner);
+        return Objects.equals(name, site.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, owner);
+        return Objects.hashCode(name);
     }
 
     @Override

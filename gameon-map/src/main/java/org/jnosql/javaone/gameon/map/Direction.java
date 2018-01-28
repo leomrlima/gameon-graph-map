@@ -15,8 +15,6 @@
 
 package org.jnosql.javaone.gameon.map;
 
-import java.util.EnumSet;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public enum Direction implements Supplier<String>, Reversible {
@@ -27,19 +25,11 @@ public enum Direction implements Supplier<String>, Reversible {
             return SOUTH.get();
         }
 
-        @Override
-        public String get() {
-            return "North";
-        }
+
     }, SOUTH {
         @Override
         public String getReverse() {
             return NORTH.get();
-        }
-
-        @Override
-        public String get() {
-            return "South";
         }
     }, EAST {
         @Override
@@ -47,20 +37,16 @@ public enum Direction implements Supplier<String>, Reversible {
             return WEST.get();
         }
 
-        @Override
-        public String get() {
-            return "East";
-        }
     }, WEST {
         @Override
         public String getReverse() {
             return EAST.get();
         }
-
-        @Override
-        public String get() {
-            return "West";
-        }
     };
+
+    @Override
+    public String get() {
+        return this.name();
+    }
 
 }

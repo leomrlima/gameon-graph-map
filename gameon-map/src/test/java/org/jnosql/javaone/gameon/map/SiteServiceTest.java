@@ -25,7 +25,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.jnosql.javaone.gameon.map.Site.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -126,6 +130,58 @@ public class SiteServiceTest {
 
         Site site = siteService.goTo(main, Direction.NORTH).get();
         Assertions.assertEquals(site.getName(), second.getName());
+    }
+
+    @Test
+    public void shouldDoMap() {
+
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        Site second = builder().withName("second").withFullName("second room").build();
+        Site third = builder().withName("third").withFullName("third room").build();
+        Site fourth = builder().withName("fourth").withFullName("fourth room").build();
+        Site fifth = builder().withName("fifth").withFullName("fifth room").build();
+
+
+        Set<Site> sites = new HashSet<>(Arrays.asList(second, third, fourth, fifth));
+
+        siteService.place(second);
+        siteService.place(third);
+        siteService.place(fourth);
+        siteService.place(fifth);
+
+        main = siteService.findByName(main.getName()).get();
+
+        for (Direction direction : Direction.values()) {
+            Optional<Site> site = siteService.goTo(main, direction);
+            Assertions.assertTrue(site.isPresent());
+            sites.remove(site.get());
+        }
+
+        Assertions.assertTrue(sites.isEmpty());
+
+    }
+
+    @Test
+    public void shouldBecameUnavailable() {
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        Site second = builder().withName("second").withFullName("second room").build();
+        Site third = builder().withName("third").withFullName("third room").build();
+        Site fourth = builder().withName("fourth").withFullName("fourth room").build();
+        Site fifth = builder().withName("fifth").withFullName("fifth room").build();
+
+        siteService.place(second);
+        siteService.place(third);
+        siteService.place(fourth);
+        siteService.place(fifth);
+
+        main = siteService.findByName("main").get();
+
+        Assertions.assertFalse(main.isDoorAvailable());
+
     }
 
 }
