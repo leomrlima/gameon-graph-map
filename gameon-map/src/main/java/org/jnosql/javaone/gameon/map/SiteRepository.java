@@ -23,4 +23,6 @@ public interface SiteRepository extends Repository<Site, Long> {
 
 
     Optional<Site> findByName(String name);
+
+    void deleteByName(String name);
 }
