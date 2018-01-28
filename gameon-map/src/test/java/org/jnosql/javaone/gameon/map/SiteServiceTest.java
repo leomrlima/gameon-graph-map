@@ -32,12 +32,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import static org.apache.tinkerpop.gremlin.structure.Direction.OUT;
 import static org.jnosql.javaone.gameon.map.Site.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -198,24 +199,92 @@ public class SiteServiceTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
 
-        Site second = builder().withName("second").withFullName("second room").build();
-        Site third = builder().withName("third").withFullName("third room").build();
-        Site fourth = builder().withName("fourth").withFullName("fourth room").build();
-        Site fifth = builder().withName("fifth").withFullName("fifth room").build();
-        Site sixth = builder().withName("sixth").withFullName("sixth room").build();
+        for (int index = 0; index < 12; index++) {
+            Site site = builder().withName("room_" + index).withFullName("room_" + index).build();
+            siteService.place(site);
+            site = siteService.findByName(site.getName()).get();
+            System.out.println(site.getName() + ": " + (site.getCoordinate().getX()) + ":" + (site.getCoordinate().getY()) + "p" + site.getCoordinate().getWeight());
+        }
 
+        Coordinate[][] coordinates = new Coordinate[5][5];
+        Site[][] sites = new Site[5][5];
+        for (int x = -2; x <= 2; x++) {
+            for (int y = -2; y <= 2; y++) {
+                coordinates[x + 2][y + 2] = Coordinate.builder().withX(x).withY(y).build();
+                Optional<Site> siteXY = siteService.findByCoordinate(coordinates[x + 2][y + 2]);
+                if (siteXY.isPresent()) {
+                    sites[x + 2][y + 2] = siteXY.get();
+                }
+            }
+        }
 
-        siteService.place(second);
-        siteService.place(third);
-        siteService.place(fourth);
-        siteService.place(fifth);
-        siteService.place(sixth);
+        //y = -2
+        Assertions.assertNull(sites[0][0]);
+        Assertions.assertNull(sites[1][0]);
+        Assertions.assertNotNull(sites[2][0]);
+        Assertions.assertNull(sites[3][0]);
+        Assertions.assertNull(sites[4][0]);
 
-        sixth = siteService.findByName("sixth").get();
+        //y = -1
+        Assertions.assertNull(sites[0][1]);
+        Assertions.assertNotNull(sites[1][1]);
+        Assertions.assertNotNull(sites[2][1]);
+        Assertions.assertNotNull(sites[3][1]);
+        Assertions.assertNull(sites[4][1]);
 
-        Collection<EdgeEntity> edges = template.getEdges(sixth, OUT);
-        Assertions.assertEquals(2, edges.size());
+        //y = -0
+        Assertions.assertNotNull(sites[0][2]);
+        Assertions.assertNotNull(sites[1][2]);
+        Assertions.assertNotNull(sites[2][2]);
+        Assertions.assertNotNull(sites[3][2]);
+        Assertions.assertNotNull(sites[4][2]);
 
+        //y = 1
+        Assertions.assertNull(sites[0][3]);
+        Assertions.assertNotNull(sites[1][3]);
+        Assertions.assertNotNull(sites[2][3]);
+        Assertions.assertNotNull(sites[3][3]);
+        Assertions.assertNull(sites[4][3]);
+
+        //y = 2
+        Assertions.assertNull(sites[0][4]);
+        Assertions.assertNull(sites[1][4]);
+        Assertions.assertNotNull(sites[2][4]);
+        Assertions.assertNull(sites[3][4]);
+        Assertions.assertNull(sites[4][4]);
+
+        //x = 0, y = 1
+        {
+            Site zp1 = sites[2][3];
+            Collection<EdgeEntity> edges_zp1 = template.getEdges(zp1, OUT);
+            Assertions.assertEquals(4, edges_zp1.size());
+            Assertions.assertEquals(sites[1][3], siteService.goTo(zp1, Direction.WEST).get());
+            Assertions.assertEquals(sites[3][3], siteService.goTo(zp1, Direction.EAST).get());
+            Assertions.assertEquals(sites[2][4], siteService.goTo(zp1, Direction.NORTH).get());
+            Assertions.assertEquals(sites[2][2], siteService.goTo(zp1, Direction.SOUTH).get());
+        }
+
+        //x = 0, y = 2
+        {
+            Site zp2 = sites[2][4];
+            Collection<EdgeEntity> edges_zp2 = template.getEdges(zp2, OUT);
+            Assertions.assertEquals(1, edges_zp2.size());
+            Assertions.assertEquals(sites[2][3], siteService.goTo(zp2, Direction.SOUTH).get());
+            assertFalse(siteService.goTo(zp2, Direction.NORTH).isPresent());
+            assertFalse(siteService.goTo(zp2, Direction.EAST).isPresent());
+            assertFalse(siteService.goTo(zp2, Direction.WEST).isPresent());
+        }
+
+        //x = -1, y = -1
+        {
+            Site m1m1 = sites[1][1];
+            Collection<EdgeEntity> edges_m1m1 = template.getEdges(m1m1, OUT);
+            Assertions.assertEquals(2, edges_m1m1.size());
+            Assertions.assertEquals(sites[1][2], siteService.goTo(m1m1, Direction.NORTH).get());
+            Assertions.assertEquals(sites[2][1], siteService.goTo(m1m1, Direction.EAST).get());
+            assertFalse(siteService.goTo(m1m1, Direction.WEST).isPresent());
+            assertFalse(siteService.goTo(m1m1, Direction.SOUTH).isPresent());
+        }
 
     }
 

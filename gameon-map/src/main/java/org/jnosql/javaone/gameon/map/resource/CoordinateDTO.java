@@ -78,6 +78,6 @@ public class CoordinateDTO implements Serializable {
         if(Objects.isNull(dto)) {
             return null;
         }
-        return Coordinate.builder().withX(dto.x).withY(dto.y).builder();
+        return Coordinate.builder().withX(dto.x).withY(dto.y).build();
     }
 }

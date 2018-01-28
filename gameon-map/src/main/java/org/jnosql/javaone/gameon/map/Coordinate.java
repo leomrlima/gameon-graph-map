@@ -84,19 +84,19 @@ public class Coordinate implements Serializable {
 
 
     public Coordinate toNorth() {
-        return builder().withY(this.y + 1).withX(x).builder();
+        return builder().withY(this.y + 1).withX(x).build();
     }
 
     public Coordinate toSouth() {
-        return builder().withY(this.y - 1).withX(x).builder();
+        return builder().withY(this.y - 1).withX(x).build();
     }
 
     public Coordinate toEast() {
-        return builder().withY(this.y).withX(x + 1).builder();
+        return builder().withY(this.y).withX(x + 1).build();
     }
 
     public Coordinate toWest() {
-        return builder().withY(this.y).withX(x - 1).builder();
+        return builder().withY(this.y).withX(x - 1).build();
     }
 
     public static CoordinateBuilder builder() {
@@ -137,11 +137,11 @@ public class Coordinate implements Serializable {
             return this;
         }
 
-        public Coordinate builder() {
+        public Coordinate build() {
             Coordinate coordinate = new Coordinate();
             coordinate.x = x;
             coordinate.y = y;
-            coordinate.weight = Math.abs(y + x);
+            coordinate.weight = Math.abs(y) + Math.abs(x);
             return coordinate;
         }
     }
