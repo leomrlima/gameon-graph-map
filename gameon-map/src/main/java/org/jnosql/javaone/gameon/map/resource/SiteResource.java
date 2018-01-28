@@ -28,13 +28,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @ApplicationScoped
@@ -61,8 +60,13 @@ public class SiteResource {
 
 
     @POST
-    public void create(@Valid  SiteDTO dto) {
-        siteService.create(dto.ti);
+    public void create(@Valid SiteDTO dto) {
+        try {
+            siteService.create(dto.toSite());
+        } catch (IllegalArgumentException ex) {
+            throw new WebApplicationException(ex.getMessage(), BAD_REQUEST);
+        }
+
     }
 
     @Path("/{id}")
