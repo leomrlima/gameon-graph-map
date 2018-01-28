@@ -84,7 +84,7 @@ public class SiteResource {
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         site.merge(dto.toSite());
-        siteService.save(site);
+        siteService.update(site);
     }
 
 }

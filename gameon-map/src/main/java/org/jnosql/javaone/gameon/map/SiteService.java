@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.Optional;
 
 import static java.util.Comparator.comparing;
-import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
 import static org.jnosql.artemis.DatabaseType.GRAPH;
 
 @ApplicationScoped
@@ -42,37 +42,44 @@ public class SiteService {
 
 
     @Transactional
-    public void save(Site site) {
-        if (isNull(site.getId())) {
-            Optional<Site> siteByName = repository.findByName(site.getName());
-            siteByName.ifPresent(site::merge);
-        }
+    public void update(Site site) {
+        requireNonNull(site, "site is required");
+        Optional<Site> siteByName = repository.findByName(site.getName());
+        siteByName.ifPresent(site::merge);
         repository.save(site);
     }
 
 
     @Transactional
     public void create(Site site) {
-        repository.findByName(site.getName()).ifPresent(c ->{
+        requireNonNull(site, "site is required");
+        repository.findByName(site.getName()).ifPresent(c -> {
             throw new IllegalArgumentException("The site name already does exist: " + site.getName());
         });
         repository.save(site);
     }
 
 
-
     @Transactional
     public void deleteByName(String name) {
+        requireNonNull(name, "name is required");
         repository.deleteByName(Name.of(name).get());
     }
 
+    public Optional<Site> findByName(String name) {
+        requireNonNull(name, "name is required");
+        return repository.findByName(Name.of(name).get());
+    }
+
     public Optional<Site> goTo(Site site, Direction direction) {
+
+        requireNonNull(site, "site is required");
+        requireNonNull(direction, "direction is required");
+
         return template.getTraversalVertex(site.getId()).out(direction).<Site>next();
     }
 
-    public Optional<Site> findByName(String name) {
-        return repository.findByName(Name.of(name).get());
-    }
+
 
 
     public Optional<Site> getRecentRoom() {
@@ -82,7 +89,6 @@ public class SiteService {
                 .sorted(ORDER_WEIGHT)
                 .findFirst();
     }
-
 
 
 }

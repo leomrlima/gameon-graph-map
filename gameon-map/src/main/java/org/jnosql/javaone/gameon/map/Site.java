@@ -76,10 +76,10 @@ public class Site implements Serializable {
     private Coordinate coordinate;
 
     @Column
-    private boolean empty;
+    private Boolean empty;
 
     @Column
-    private boolean doorAvailable;
+    private Boolean doorAvailable;
 
     Site() {
     }
@@ -159,9 +159,13 @@ public class Site implements Serializable {
         }
         ofNullable(site.connectionType).ifPresent(n -> this.connectionType = n);
         ofNullable(site.connectionTarget).ifPresent(n -> this.connectionTarget = n);
+        ofNullable(site.connectionToken).ifPresent(n -> this.connectionToken = n);
         ofNullable(site.fullName).ifPresent(n -> this.fullName = n);
         ofNullable(site.description).ifPresent(n -> this.description = n);
         ofNullable(site.owner).ifPresent(n -> this.owner = n);
+        ofNullable(site.doorAvailable).ifPresent(n -> this.doorAvailable = n);
+        ofNullable(site.coordinate).ifPresent(n -> this.coordinate = n);
+        ofNullable(site.empty).ifPresent(n -> this.empty = n);
         ofNullable(site.doorAvailable).ifPresent(n -> this.doorAvailable = n);
 
     }
