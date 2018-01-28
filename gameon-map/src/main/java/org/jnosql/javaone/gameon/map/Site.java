@@ -169,7 +169,10 @@ public class Site implements Serializable {
         this.coordinate = ofNullable(this.coordinate).orElse(site.coordinate);
         this.empty = ofNullable(this.empty).orElse(site.empty);
         this.doorAvailable = ofNullable(this.doorAvailable).orElse(site.doorAvailable);
+    }
 
+    void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     public static SiteBuilder builder() {

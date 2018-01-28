@@ -37,6 +37,7 @@ public class SiteService {
     @Database(GRAPH)
     private SiteRepository repository;
 
+
     @Inject
     private GraphTemplate template;
 
@@ -79,7 +80,7 @@ public class SiteService {
 
 
     public SiteCreator getNewSiteCreator() {
-        return new DefaultSiteCreator(this);
+        return new DefaultSiteCreator(this, template);
     }
 
 

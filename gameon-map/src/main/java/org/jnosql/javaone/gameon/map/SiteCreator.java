@@ -18,7 +18,7 @@ import org.jnosql.artemis.graph.EdgeEntity;
 
 public interface SiteCreator {
 
-    SiteFromCreator create(Site site) throws NullPointerException, IllegalStateException;
+    SiteFromCreator to(Site site) throws NullPointerException, IllegalStateException;
 
 
     interface SiteFromCreator {
@@ -27,12 +27,12 @@ public interface SiteCreator {
 
     interface SiteDestination {
 
-        EdgeEntity north(String description) throws NullPointerException;
+        void north(String forward, String rollback) throws NullPointerException;
 
-        EdgeEntity south(String description) throws NullPointerException;
+        void  south(String forward, String rollback) throws NullPointerException;
 
-        EdgeEntity west(String description) throws NullPointerException;
+        void  west(String forward, String rollback) throws NullPointerException;
 
-        EdgeEntity east(String description) throws NullPointerException;
+        void  east(String forward, String rollback) throws NullPointerException;
     }
 }

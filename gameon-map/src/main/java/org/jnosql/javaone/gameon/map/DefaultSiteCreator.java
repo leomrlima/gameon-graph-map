@@ -15,8 +15,11 @@
 package org.jnosql.javaone.gameon.map;
 
 import org.jnosql.artemis.graph.EdgeEntity;
+import org.jnosql.artemis.graph.GraphTemplate;
 
 import java.util.Objects;
+
+import static org.jnosql.javaone.gameon.map.Direction.NORTH;
 
 class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, SiteCreator.SiteDestination {
 
@@ -24,49 +27,71 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     private Site from;
 
-    private  final SiteService siteService;
+    private final SiteService siteService;
+    private final GraphTemplate graphTemplate;
 
-    DefaultSiteCreator(SiteService siteService) {
+    DefaultSiteCreator(SiteService siteService, GraphTemplate graphTemplate) {
         this.siteService = siteService;
+        this.graphTemplate = graphTemplate;
     }
 
 
     @Override
-    public SiteFromCreator create(Site site) throws NullPointerException {
+    public SiteFromCreator to(Site site) throws NullPointerException {
         Objects.requireNonNull(site, "iste is required");
         siteService.create(site);
-        this.to = siteService.findByName(site.getName())
-                .orElseThrow(() -> new IllegalStateException("Site does not found: " + site.getName()));
+        siteService.findByName(site.getName())
+                .ifPresent(c -> {
+                    throw new IllegalStateException("Site does not found: " + site.getName());
+                });
 
         return this;
     }
 
     @Override
-    public SiteFromCreator from(String name) throws NullPointerException {
+    public SiteDestination from(String name) throws NullPointerException {
         Objects.requireNonNull(name, "name is required");
 
         this.from = siteService.findByName(name)
-                .orElseThrow(()-> new IllegalArgumentException("Site does not found" + name));
+                .orElseThrow(() -> new IllegalArgumentException("Site does not found" + name));
         return this;
     }
 
     @Override
-    public EdgeEntity north() {
-        return null;
+    public void  north(String forward, String rollback) throws NullPointerException {
+        Objects.requireNonNull(forward, "description is required");
+        Objects.requireNonNull(rollback, "rollback is required");
+
+        Coordinate coordinate = from.getCoordinate();
+        Coordinate newCoordinate = Coordinate.builder().withX(coordinate.getX() + 1).withY(coordinate.getY()).builder();
+        to.setCoordinate(newCoordinate);
+        siteService.create(to);
+        to = siteService.findByName(to.getName()).get();
+        EdgeEntity edge = graphTemplate.edge(from, NORTH, to);
+        EdgeEntity edge1 = graphTemplate.edge(to, NORTH.getReversal(), from);
+
+
+
+        edge.add("description", forward);
+        edge1.add("description", rollback);
+
     }
 
     @Override
-    public EdgeEntity south() {
-        return null;
+    public void  south(String forward, String rollback) throws NullPointerException {
+        Objects.requireNonNull(forward, "description is required");
+        Objects.requireNonNull(rollback, "rollback is required");
     }
 
     @Override
-    public EdgeEntity west() {
-        return null;
+    public void  west(String forward, String rollback) throws NullPointerException {
+        Objects.requireNonNull(forward, "description is required");
+        Objects.requireNonNull(rollback, "rollback is required");
     }
 
     @Override
-    public EdgeEntity east() {
-        return null;
+    public void  east(String forward, String rollback) throws NullPointerException {
+        Objects.requireNonNull(forward, "description is required");
+        Objects.requireNonNull(rollback, "rollback is required");
     }
 }

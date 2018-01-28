@@ -3,7 +3,6 @@ package org.jnosql.javaone.gameon.map;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
-import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.javaone.gameon.map.infrastructure.CDIExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,14 +35,14 @@ public class SiteCreatorTest {
 
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->{
-            siteService.getNewSiteCreator().create(site);
+            siteService.getNewSiteCreator().to(site);
         });
     }
 
     @Test
     public void shouldReturnErrorWhenFromSiteDoesNotExist() {
         Site site = builder().withName("second").withFullName("Main room site").build();
-        SiteCreator.SiteFromCreator siteFromCreator = siteService.getNewSiteCreator().create(site);
+        SiteCreator.SiteFromCreator siteFromCreator = siteService.getNewSiteCreator().to(site);
         Assertions.assertThrows(IllegalArgumentException.class, () ->{
             siteFromCreator.from("not_found");
         });
@@ -53,10 +52,21 @@ public class SiteCreatorTest {
     @Test
     public void shouldCreateToNorth() {
         String description = "noth gate description";
+        String descriptionB = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        EdgeEntity north = siteService.getNewSiteCreator().create(site).from("main").north(description);
+        siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
+
+        main = siteService.findByName("main").get();
+        Site northSite = siteService.findByName("main").get();
+
+        Coordinate coordinate = northSite.getCoordinate();
+        Assertions.assertEquals(1, coordinate.getY());
+        Assertions.assertEquals(0, coordinate.getX());
+        Assertions.assertEquals(1, coordinate.getWeight());
+
+
     }
 
 
