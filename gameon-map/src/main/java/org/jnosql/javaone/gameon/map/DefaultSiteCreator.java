@@ -67,43 +67,43 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     }
 
     @Override
-    public void north(String forward, String rollback) throws NullPointerException {
-        implDirection(forward, rollback, Coordinate::toNorth, NORTH);
+    public void north(String forward, String backward) throws NullPointerException {
+        implDirection(forward, backward, Coordinate::toNorth, NORTH);
     }
 
     @Override
-    public void south(String forward, String rollback) throws NullPointerException {
-        implDirection(forward, rollback, Coordinate::toSouth, SOUTH);
+    public void south(String forward, String backward) throws NullPointerException {
+        implDirection(forward, backward, Coordinate::toSouth, SOUTH);
     }
 
     @Override
-    public void west(String forward, String rollback) throws NullPointerException {
+    public void west(String forward, String backward) throws NullPointerException {
 
-        implDirection(forward, rollback, Coordinate::toWest, WEST);
+        implDirection(forward, backward, Coordinate::toWest, WEST);
     }
 
     @Override
-    public void east(String forward, String rollback) throws NullPointerException {
+    public void east(String forward, String backward) throws NullPointerException {
 
-        implDirection(forward, rollback, Coordinate::toEast, EAST);
+        implDirection(forward, backward, Coordinate::toEast, EAST);
     }
 
-    private void implDirection(String forward, String rollback, UnaryOperator<Coordinate> operator,
+    private void implDirection(String forward, String backward, UnaryOperator<Coordinate> operator,
                                  Direction direction) {
 
 
         check();
         requireNonNull(forward, "description is required");
-        requireNonNull(rollback, "rollback is required");
+        requireNonNull(backward, "backward is required");
 
         to.setCoordinate(operator.apply(from.getCoordinate()));
         siteService.create(to);
         to = siteService.findByName(to.getName()).get();
         EdgeEntity edgeForward = graphTemplate.edge(from, direction, to);
-        EdgeEntity edgeRollback = graphTemplate.edge(to, direction.getReversal(), from);
+        EdgeEntity edgebackward = graphTemplate.edge(to, direction.getReverse(), from);
 
         edgeForward.add("description", forward);
-        edgeRollback.add("description", rollback);
+        edgebackward.add("description", backward);
 
         this.isValid = false;
 

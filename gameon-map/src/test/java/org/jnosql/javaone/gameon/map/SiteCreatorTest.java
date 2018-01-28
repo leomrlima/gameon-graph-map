@@ -66,11 +66,11 @@ public class SiteCreatorTest {
     @Test
     public void shouldCreateToNorth() {
         String forward = "north gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").north(forward, rollback);
+        siteService.getNewSiteCreator().to(site).from("main").north(forward, backward);
 
         main = siteService.findByName("main").get();
         Site northSite = siteService.findByName("second").get();
@@ -87,11 +87,11 @@ public class SiteCreatorTest {
     @Test
     public void shouldCreateToSouth() {
         String forward = "south gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").south(forward, rollback);
+        siteService.getNewSiteCreator().to(site).from("main").south(forward, backward);
 
         Site southSite = siteService.findByName("second").get();
 
@@ -105,11 +105,11 @@ public class SiteCreatorTest {
     @Test
     public void shouldCreateToWest() {
         String forward = "west gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").west(forward, rollback);
+        siteService.getNewSiteCreator().to(site).from("main").west(forward, backward);
 
         Site westSite = siteService.findByName("second").get();
 
@@ -122,11 +122,12 @@ public class SiteCreatorTest {
     @Test
     public void shouldCreateToEast() {
         String forward = "east gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").east(forward, rollback);
+        SiteCreator siteCreator = siteService.getNewSiteCreator();
+        siteCreator.to(site).from("main").east(forward, backward);
 
         Site eastSite = siteService.findByName("second").get();
 
@@ -139,16 +140,16 @@ public class SiteCreatorTest {
     @Test
     public void shouldReturnErrorWhenUseCreatorTwice() {
         String forward = "east gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
         SiteCreator siteCreator = siteService.getNewSiteCreator();
-        siteCreator.to(site).from("main").east(forward, rollback);
+        siteCreator.to(site).from("main").east(forward, backward);
 
         Site third = builder().withName("third").withFullName("Main room site").build();
         Assertions.assertThrows(IllegalStateException.class, () ->{
-            siteCreator.to(third).from("main").east(forward, rollback);
+            siteCreator.to(third).from("main").east(forward, backward);
         });
     }
 

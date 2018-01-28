@@ -88,11 +88,11 @@ public class SiteServiceTest {
     @Test
     public void shouldGoTo() {
         String forward = "west gate description";
-        String rollback = "back gate description";
+        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").west(forward, rollback);
+        siteService.getNewSiteCreator().to(site).from("main").west(forward, backward);
 
         Site eastSite = siteService.findByName("second").get();
         main = siteService.findByName("main").get();
