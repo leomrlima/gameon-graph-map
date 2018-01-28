@@ -17,6 +17,8 @@ package org.jnosql.javaone.gameon.map;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
 
+import java.util.function.UnaryOperator;
+
 import static java.util.Objects.requireNonNull;
 import static org.jnosql.javaone.gameon.map.Direction.EAST;
 import static org.jnosql.javaone.gameon.map.Direction.NORTH;
@@ -61,70 +63,40 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void north(String forward, String rollback) throws NullPointerException {
-        requireNonNull(forward, "description is required");
-        requireNonNull(rollback, "rollback is required");
-
-        Coordinate coordinate = from.getCoordinate();
-        to.setCoordinate(coordinate.toNorth());
-        siteService.create(to);
-        to = siteService.findByName(to.getName()).get();
-        EdgeEntity edgeForward = graphTemplate.edge(from, NORTH, to);
-        EdgeEntity edgeRollback = graphTemplate.edge(to, NORTH.getReversal(), from);
-
-
-        edgeForward.add("description", forward);
-        edgeRollback.add("description", rollback);
-
+        implDirection(forward, rollback, Coordinate::toNorth, NORTH);
     }
 
     @Override
     public void south(String forward, String rollback) throws NullPointerException {
-        requireNonNull(forward, "description is required");
-        requireNonNull(rollback, "rollback is required");
-
-        Coordinate coordinate = from.getCoordinate();
-        to.setCoordinate(coordinate.toSouth());
-        siteService.create(to);
-        to = siteService.findByName(to.getName()).get();
-        EdgeEntity edgeForward = graphTemplate.edge(from, SOUTH, to);
-        EdgeEntity edgeRollback = graphTemplate.edge(to, SOUTH.getReversal(), from);
-
-
-        edgeForward.add("description", forward);
-        edgeRollback.add("description", rollback);
+        implDirection(forward, rollback, Coordinate::toSouth, SOUTH);
     }
 
     @Override
     public void west(String forward, String rollback) throws NullPointerException {
-        requireNonNull(forward, "description is required");
-        requireNonNull(rollback, "rollback is required");
 
-        Coordinate coordinate = from.getCoordinate();
-        to.setCoordinate(coordinate.toWest());
-        siteService.create(to);
-        to = siteService.findByName(to.getName()).get();
-        EdgeEntity edgeForward = graphTemplate.edge(from, WEST, to);
-        EdgeEntity edgeRollback = graphTemplate.edge(to, WEST.getReversal(), from);
-
-
-        edgeForward.add("description", forward);
-        edgeRollback.add("description", rollback);
+        implDirection(forward, rollback, Coordinate::toWest, WEST);
     }
 
     @Override
     public void east(String forward, String rollback) throws NullPointerException {
+
+        implDirection(forward, rollback, Coordinate::toEast, EAST);
+    }
+
+    private void implDirection(String forward, String rollback, UnaryOperator<Coordinate> operator,
+                                 Direction direction) {
+
         requireNonNull(forward, "description is required");
         requireNonNull(rollback, "rollback is required");
 
-        Coordinate coordinate = from.getCoordinate();
-        to.setCoordinate(coordinate.toEast());
+        to.setCoordinate(operator.apply(from.getCoordinate()));
         siteService.create(to);
         to = siteService.findByName(to.getName()).get();
-        EdgeEntity edgeForward = graphTemplate.edge(from, EAST, to);
-        EdgeEntity edgeRollback = graphTemplate.edge(to, EAST.getReversal(), from);
-
+        EdgeEntity edgeForward = graphTemplate.edge(from, direction, to);
+        EdgeEntity edgeRollback = graphTemplate.edge(to, direction.getReversal(), from);
 
         edgeForward.add("description", forward);
         edgeRollback.add("description", rollback);
+
     }
 }
