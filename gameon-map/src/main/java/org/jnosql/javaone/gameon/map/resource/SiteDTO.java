@@ -16,6 +16,7 @@
 package org.jnosql.javaone.gameon.map.resource;
 
 import org.jnosql.javaone.gameon.map.Site;
+import org.jnosql.javaone.gameon.map.validation.Name;
 
 import java.io.Serializable;
 
@@ -23,6 +24,7 @@ public class SiteDTO implements Serializable {
 
     private Long id;
 
+    @Name
     private String name;
 
     private String connectionType;

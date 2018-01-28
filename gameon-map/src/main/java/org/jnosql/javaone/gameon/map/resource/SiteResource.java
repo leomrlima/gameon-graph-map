@@ -61,6 +61,7 @@ public class SiteResource {
     @POST
     public void create(SiteDTO dto) {
 
+
         Site site = SiteDTO.from(dto);
         siteService.save(site);
     }
