@@ -14,8 +14,6 @@
  */
 package org.jnosql.javaone.gameon.map;
 
-import org.jnosql.artemis.graph.EdgeEntity;
-
 public interface SiteCreator {
 
     SiteFromCreator to(Site site) throws NullPointerException, IllegalStateException;

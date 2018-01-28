@@ -27,7 +27,7 @@ import static org.neo4j.driver.v1.GraphDatabase.driver;
 
 final class Neo4JConfiguration implements Serializable {
 
-    static Neo4JConfiguration DEFAULT = new Neo4JConfiguration();
+    static final Neo4JConfiguration DEFAULT = new Neo4JConfiguration();
 
     private final String url;
 
