@@ -93,6 +93,6 @@ public class SiteBuilder {
 
 
     public Site build() {
-        return new Site(id, name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, empty, doorAvailable);
+        return new Site(name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, empty, doorAvailable);
     }
 }

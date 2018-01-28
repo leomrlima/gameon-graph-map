@@ -84,14 +84,13 @@ public class Site implements Serializable {
     Site() {
     }
 
-    Site(Long id, String name, String connectionType,
+    Site(String name, String connectionType,
          String connectionTarget,
          String connectionToken, String fullName,
          String description, String owner,
          Coordinate coordinate, boolean empty,
          boolean doorAvailable) {
 
-        this.id = id;
         this.name = Name.of(name);
         this.connectionType = connectionType;
         this.connectionTarget = connectionTarget;
