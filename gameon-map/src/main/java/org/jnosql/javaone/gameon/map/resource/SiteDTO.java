@@ -22,8 +22,6 @@ import java.io.Serializable;
 
 public class SiteDTO implements Serializable {
 
-    private Long id;
-
     @Name
     private String name;
 
@@ -44,15 +42,6 @@ public class SiteDTO implements Serializable {
     private boolean empty;
 
     private boolean doorAvailable;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -137,7 +126,6 @@ public class SiteDTO implements Serializable {
 
     public static SiteDTO of(Site site) {
         SiteDTO dto = new SiteDTO();
-        dto.id = site.getId();
         dto.name = site.getName();
         dto.connectionType = site.getConnectionType();
         dto.connectionTarget = site.getConnectionTarget();
@@ -152,7 +140,7 @@ public class SiteDTO implements Serializable {
     }
 
     public Site toSite() {
-        return Site.builder().withId(id)
+        return Site.builder()
                 .withName(name)
                 .withConnectionType(connectionType)
                 .withConnectionTarget(connectionTarget)
@@ -168,8 +156,7 @@ public class SiteDTO implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SiteDTO{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
+        sb.append("name='").append(name).append('\'');
         sb.append(", connectionType='").append(connectionType).append('\'');
         sb.append(", connectionTarget='").append(connectionTarget).append('\'');
         sb.append(", connectionToken='").append(connectionToken).append('\'');
