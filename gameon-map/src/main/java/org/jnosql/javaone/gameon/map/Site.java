@@ -157,16 +157,18 @@ public class Site implements Serializable {
         if (Objects.isNull(id)) {
             this.id = site.id;
         }
-        ofNullable(site.connectionType).ifPresent(n -> this.connectionType = n);
-        ofNullable(site.connectionTarget).ifPresent(n -> this.connectionTarget = n);
-        ofNullable(site.connectionToken).ifPresent(n -> this.connectionToken = n);
-        ofNullable(site.fullName).ifPresent(n -> this.fullName = n);
-        ofNullable(site.description).ifPresent(n -> this.description = n);
-        ofNullable(site.owner).ifPresent(n -> this.owner = n);
-        ofNullable(site.doorAvailable).ifPresent(n -> this.doorAvailable = n);
-        ofNullable(site.coordinate).ifPresent(n -> this.coordinate = n);
-        ofNullable(site.empty).ifPresent(n -> this.empty = n);
-        ofNullable(site.doorAvailable).ifPresent(n -> this.doorAvailable = n);
+        this.connectionType = ofNullable(this.connectionType).orElse(site.connectionType);
+        this.connectionTarget = ofNullable(this.connectionTarget).orElse(site.connectionTarget);
+        this.connectionToken = ofNullable(this.connectionToken).orElse(site.connectionToken);
+
+        this.fullName = ofNullable(this.fullName).orElse(site.fullName);
+        this.description = ofNullable(this.description).orElse(site.description);
+        this.owner = ofNullable(this.owner).orElse(site.owner);
+
+        this.doorAvailable = ofNullable(this.doorAvailable).orElse(site.doorAvailable);
+        this.coordinate = ofNullable(this.coordinate).orElse(site.coordinate);
+        this.empty = ofNullable(this.empty).orElse(site.empty);
+        this.doorAvailable = ofNullable(this.doorAvailable).orElse(site.doorAvailable);
 
     }
 
