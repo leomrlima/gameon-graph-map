@@ -82,6 +82,23 @@ public class Coordinate implements Serializable {
         return sb.toString();
     }
 
+
+    public Coordinate toNorth() {
+        return builder().withY(this.y + 1).withX(x).builder();
+    }
+
+    public Coordinate toSouth() {
+        return builder().withY(this.y - 1).withX(x).builder();
+    }
+
+    public Coordinate toEast() {
+        return builder().withY(this.y).withX(x + 1).builder();
+    }
+
+    public Coordinate toWest() {
+        return builder().withY(this.y).withX(x - 1).builder();
+    }
+
     public static CoordinateBuilder builder() {
         return new CoordinateBuilder();
     }
