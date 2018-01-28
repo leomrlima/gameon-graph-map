@@ -127,4 +127,10 @@ public class SiteService {
 
 
     }
+
+    public Optional<Site> findByCoordinate(Coordinate coordinate) {
+        return template.getTraversalVertex()
+                .has("x", coordinate.getX())
+                .has("y", coordinate.getY()).next();
+    }
 }

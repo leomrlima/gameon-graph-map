@@ -17,6 +17,9 @@ package org.jnosql.javaone.gameon.map;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
 
+import java.util.EnumSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
@@ -99,8 +102,18 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         graphTemplate.edge(from, direction, to);
         graphTemplate.edge(to, direction.getReverse(), from);
 
-        //map to
-        //check if all in from is avialable;
+
+
+        Set<Direction> directions = EnumSet.allOf(Direction.class);
+        directions.remove(Direction.valueOf(direction.getReverse()));
+
+        for (Direction d : directions) {
+            Optional<Site> neighbor = siteService.findByCoordinate(to.getCoordinate().to(d));
+            if(neighbor.isPresent()) {
+                graphTemplate.edge(neighbor.get(), d.getReverse(), to);
+                graphTemplate.edge(to, d, neighbor.get());
+            }
+        }
 
         this.isValid = false;
 

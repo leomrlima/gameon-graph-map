@@ -17,6 +17,8 @@ package org.jnosql.javaone.gameon.map;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.jnosql.artemis.graph.EdgeEntity;
+import org.jnosql.artemis.graph.GraphTemplate;
 import org.jnosql.javaone.gameon.map.infrastructure.CDIExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +28,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import javax.inject.Inject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static org.apache.tinkerpop.gremlin.structure.Direction.OUT;
 import static org.jnosql.javaone.gameon.map.Site.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,6 +49,9 @@ public class SiteServiceTest {
 
     @Inject
     private Graph graph;
+
+    @Inject
+    private GraphTemplate template;
 
     @BeforeEach
     public void before() {
@@ -181,6 +188,34 @@ public class SiteServiceTest {
         main = siteService.findByName("main").get();
 
         Assertions.assertFalse(main.isDoorAvailable());
+
+    }
+
+
+    @Test
+    public void shouldGoLevelTwo() {
+
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        Site second = builder().withName("second").withFullName("second room").build();
+        Site third = builder().withName("third").withFullName("third room").build();
+        Site fourth = builder().withName("fourth").withFullName("fourth room").build();
+        Site fifth = builder().withName("fifth").withFullName("fifth room").build();
+        Site sixth = builder().withName("sixth").withFullName("sixth room").build();
+
+
+        siteService.place(second);
+        siteService.place(third);
+        siteService.place(fourth);
+        siteService.place(fifth);
+        siteService.place(sixth);
+
+        sixth = siteService.findByName("sixth").get();
+
+        Collection<EdgeEntity> edges = template.getEdges(sixth, OUT);
+        Assertions.assertEquals(2, edges.size());
+
 
     }
 
