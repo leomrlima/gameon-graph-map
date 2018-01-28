@@ -59,14 +59,9 @@ public class SiteService {
         return repository.findByName(name);
     }
 
-    @Transactional
-    public void direction(Site siteA, Direction direction, Site siteB) {
-        template.edge(siteA, direction.get(), siteB);
-        template.edge(siteB, direction.getReversal(), siteA);
-    }
 
-    public Optional<Site> goTo(Site secondRoom, Direction direction) {
-        return template.getTraversalVertex(secondRoom.getId()).out(direction.get()).<Site>next();
+    public Optional<Site> goTo(Site site, Direction direction) {
+        return template.getTraversalVertex(site.getId()).out(direction).<Site>next();
     }
 
 
