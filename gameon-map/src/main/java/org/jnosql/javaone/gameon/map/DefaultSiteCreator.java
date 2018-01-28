@@ -39,12 +39,12 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     @Override
     public SiteFromCreator to(Site site) throws NullPointerException {
         Objects.requireNonNull(site, "iste is required");
-        siteService.create(site);
         siteService.findByName(site.getName())
                 .ifPresent(c -> {
-                    throw new IllegalStateException("Site does not found: " + site.getName());
+                    throw new IllegalStateException("Site Already does exist: " + site.getName());
                 });
 
+        this.to = site;
         return this;
     }
 
@@ -58,18 +58,17 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     }
 
     @Override
-    public void  north(String forward, String rollback) throws NullPointerException {
+    public void north(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
 
         Coordinate coordinate = from.getCoordinate();
-        Coordinate newCoordinate = Coordinate.builder().withX(coordinate.getX() + 1).withY(coordinate.getY()).builder();
+        Coordinate newCoordinate = Coordinate.builder().withX(coordinate.getX()).withY(coordinate.getY() + 1).builder();
         to.setCoordinate(newCoordinate);
         siteService.create(to);
         to = siteService.findByName(to.getName()).get();
         EdgeEntity edge = graphTemplate.edge(from, NORTH, to);
         EdgeEntity edge1 = graphTemplate.edge(to, NORTH.getReversal(), from);
-
 
 
         edge.add("description", forward);
@@ -78,19 +77,19 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     }
 
     @Override
-    public void  south(String forward, String rollback) throws NullPointerException {
+    public void south(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
     }
 
     @Override
-    public void  west(String forward, String rollback) throws NullPointerException {
+    public void west(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
     }
 
     @Override
-    public void  east(String forward, String rollback) throws NullPointerException {
+    public void east(String forward, String rollback) throws NullPointerException {
         Objects.requireNonNull(forward, "description is required");
         Objects.requireNonNull(rollback, "rollback is required");
     }

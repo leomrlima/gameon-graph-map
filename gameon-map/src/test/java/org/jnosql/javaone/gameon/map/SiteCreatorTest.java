@@ -59,7 +59,7 @@ public class SiteCreatorTest {
         siteService.getNewSiteCreator().to(site).from("main").north(description, descriptionB);
 
         main = siteService.findByName("main").get();
-        Site northSite = siteService.findByName("main").get();
+        Site northSite = siteService.findByName("second").get();
 
         Coordinate coordinate = northSite.getCoordinate();
         Assertions.assertEquals(1, coordinate.getY());
