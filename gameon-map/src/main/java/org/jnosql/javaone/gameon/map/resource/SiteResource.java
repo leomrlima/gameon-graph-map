@@ -50,21 +50,13 @@ public class SiteResource {
 
     @GET
     @Path("/{id}")
-    public SiteDTO findById(@PathParam("id") Long id) {
-        Site site = siteService.findById(id)
+    public SiteDTO findById(@PathParam("id") String id) {
+        Site site = siteService.findByName(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         return SiteDTO.of(site);
     }
 
-    @GET
-    @Path("/search/")
-    public SiteDTO findByName(@QueryParam("name") String name) {
-        Site site = siteService.findByName(name)
-                .orElseThrow(NOT_FOUND_SUPPLIER);
-
-        return SiteDTO.of(site);
-    }
 
     @POST
     public void create(SiteDTO dto) {
@@ -75,8 +67,8 @@ public class SiteResource {
 
     @Path("/{id}")
     @PUT
-    public void update(@PathParam("id") Long id, SiteDTO dto) {
-        Site site = siteService.findById(id)
+    public void update(@PathParam("id") String id, SiteDTO dto) {
+        Site site = siteService.findByName(id)
                 .orElseThrow(NOT_FOUND_SUPPLIER);
 
         site.merge(SiteDTO.from(dto));

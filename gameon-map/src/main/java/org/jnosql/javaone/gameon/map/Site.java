@@ -158,7 +158,6 @@ public class Site implements Serializable {
         if (Objects.isNull(id)) {
             this.id = site.id;
         }
-        ofNullable(site.name).ifPresent(n -> this.name = n);
         ofNullable(site.connectionType).ifPresent(n -> this.connectionType = n);
         ofNullable(site.connectionTarget).ifPresent(n -> this.connectionTarget = n);
         ofNullable(site.fullName).ifPresent(n -> this.fullName = n);
