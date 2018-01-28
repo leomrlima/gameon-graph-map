@@ -34,13 +34,19 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
     @Override
     public SiteFromCreator create(Site site) throws NullPointerException {
         Objects.requireNonNull(site, "iste is required");
+        siteService.create(site);
+        this.to = siteService.findByName(site.getName())
+                .orElseThrow(() -> new IllegalStateException("Site does not found: " + site.getName()));
 
         return this;
     }
 
     @Override
-    public SiteFromCreator from(Site site) throws NullPointerException {
-        Objects.requireNonNull(site, "iste is required");
+    public SiteFromCreator from(String name) throws NullPointerException {
+        Objects.requireNonNull(name, "name is required");
+
+        this.from = siteService.findByName(name)
+                .orElseThrow(()-> new IllegalArgumentException("Site does not found" + name));
         return this;
     }
 

@@ -18,11 +18,11 @@ import org.jnosql.artemis.graph.EdgeEntity;
 
 public interface SiteCreator {
 
-    SiteFromCreator create(Site site) throws NullPointerException;
+    SiteFromCreator create(Site site) throws NullPointerException, IllegalStateException;
 
 
     interface SiteFromCreator {
-        SiteFromCreator from(Site site) throws NullPointerException;
+        SiteFromCreator from(String name) throws NullPointerException, IllegalStateException;
     }
 
     interface SiteDestination {
