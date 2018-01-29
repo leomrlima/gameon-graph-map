@@ -203,7 +203,6 @@ public class SiteServiceTest {
             Site site = builder().withName("room_" + index).withFullName("room_" + index).build();
             siteService.place(site);
             site = siteService.findByName(site.getName()).get();
-            System.out.println(site.getName() + ": " + (site.getCoordinate().getX()) + ":" + (site.getCoordinate().getY()) + "p" + site.getCoordinate().getWeight());
         }
 
         Coordinate[][] coordinates = new Coordinate[5][5];
