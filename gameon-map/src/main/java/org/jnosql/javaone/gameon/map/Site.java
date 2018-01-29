@@ -55,6 +55,8 @@ public class Site implements Serializable {
     @Column
     private String owner;
 
+    @Column
+    private DoorDescription doorDescription;
 
     @Column
     private Coordinate coordinate;
@@ -69,7 +71,8 @@ public class Site implements Serializable {
     Site(String name, Connection connection, String fullName,
          String description, String owner,
          Coordinate coordinate,
-         SiteAvailability siteAvailability) {
+         SiteAvailability siteAvailability,
+         DoorDescription doorDescription) {
 
         this.name = Name.of(name);
         this.connection = connection;
@@ -78,6 +81,7 @@ public class Site implements Serializable {
         this.owner = owner;
         this.coordinate = coordinate;
         this.siteAvailability = siteAvailability;
+        this.doorDescription = doorDescription;
     }
 
     public Long getId() {
@@ -121,12 +125,17 @@ public class Site implements Serializable {
         return ofNullable(coordinate).map(Coordinate::getWeight).orElse(0L);
     }
 
+    public DoorDescription getDoorDescription() {
+        return doorDescription;
+    }
 
     public void replaceWith(Site site) {
         this.connection = ofNullable(this.connection).orElse(site.connection);
         this.fullName = ofNullable(this.fullName).orElse(site.fullName);
         this.description = ofNullable(this.description).orElse(site.description);
         this.owner = ofNullable(this.owner).orElse(site.owner);
+        this.doorDescription = ofNullable(this.doorDescription).orElse(site.doorDescription);
+
         this.siteAvailability.full();
     }
 
@@ -143,6 +152,7 @@ public class Site implements Serializable {
 
         this.siteAvailability = ofNullable(this.siteAvailability).orElse(site.siteAvailability);
         this.coordinate = ofNullable(this.coordinate).orElse(site.coordinate);
+        this.doorDescription = ofNullable(this.doorDescription).orElse(site.doorDescription);
     }
 
     void setCoordinate(Coordinate coordinate) {
@@ -174,4 +184,18 @@ public class Site implements Serializable {
         return Objects.hashCode(name);
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Site{");
+        sb.append("name=").append(name);
+        sb.append(", connection=").append(connection);
+        sb.append(", fullName='").append(fullName).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", owner='").append(owner).append('\'');
+        sb.append(", doorDescription=").append(doorDescription);
+        sb.append(", coordinate=").append(coordinate);
+        sb.append(", siteAvailability=").append(siteAvailability);
+        sb.append('}');
+        return sb.toString();
+    }
 }
