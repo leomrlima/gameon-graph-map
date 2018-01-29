@@ -153,6 +153,7 @@ public class SiteDTO implements Serializable {
         sb.append(", coordinate=").append(coordinate);
         sb.append(", empty=").append(empty);
         sb.append(", doorAvailable=").append(doorAvailable);
+        sb.append(", doorDescription=").append(doorDescription);
         sb.append('}');
         return sb.toString();
     }

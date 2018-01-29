@@ -187,7 +187,8 @@ public class Site implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Site{");
-        sb.append("name=").append(name);
+        sb.append("id=").append(id);
+        sb.append(", name=").append(name);
         sb.append(", connection=").append(connection);
         sb.append(", fullName='").append(fullName).append('\'');
         sb.append(", description='").append(description).append('\'');
