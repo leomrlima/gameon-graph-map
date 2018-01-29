@@ -95,9 +95,10 @@ public class SiteService {
         Predicate<Site> isDoorAvailable = Site::isDoorAvailable;
 
         return template.getTraversalVertex()
+                .orderBy("weight").asc()
                 .filter(isEmpty.or(isDoorAvailable))
+                .limit(1L)
                 .<Site>stream()
-                .sorted(ORDER_WEIGHT)
                 .findFirst();
     }
 
