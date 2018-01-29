@@ -36,25 +36,6 @@ public class Site implements Serializable {
     @Convert(NameConverter.class)
     private Name name;
 
-    /**
-     * Connection type
-     */
-    @Column
-    private String connectionType;
-
-    /**
-     * Connection target, usually a URL
-     */
-    @Column
-    private String connectionTarget;
-
-    /**
-     * (Optional) A token used for mutual identification between the room and
-     * the mediator during the initial handshake when the connection is
-     * established
-     */
-    @Column
-    private String connectionToken;
 
     /**
      * (Optional) Human-friendly room name
