@@ -21,11 +21,7 @@ public class SiteBuilder {
 
     private String name;
 
-    private String connectionType;
-
-    private String connectionTarget;
-
-    private String connectionToken;
+    private Connection.ConnectionBuilder connectionBuilder = Connection.builder();
 
     private String fullName;
 
@@ -46,17 +42,17 @@ public class SiteBuilder {
     }
 
     public SiteBuilder withConnectionType(String connectionType) {
-        this.connectionType = connectionType;
+        this.connectionBuilder.withConnectionType(connectionType);
         return this;
     }
 
     public SiteBuilder withConnectionTarget(String connectionTarget) {
-        this.connectionTarget = connectionTarget;
+        this.connectionBuilder.withConnectionTarget(connectionTarget);
         return this;
     }
 
     public SiteBuilder withConnectionToken(String connectionToken) {
-        this.connectionToken = connectionToken;
+        this.connectionBuilder.withConnectionTarget(connectionToken);
         return this;
     }
 
@@ -91,6 +87,6 @@ public class SiteBuilder {
     }
 
     public Site build() {
-        return new Site(name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, siteAvailabilityBuilder.build());
+        return new Site(name, connectionBuilder.build(), fullName, description, owner, coordinate, siteAvailabilityBuilder.build());
     }
 }

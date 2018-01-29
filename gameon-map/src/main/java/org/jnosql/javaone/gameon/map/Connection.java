@@ -93,6 +93,10 @@ public class Connection {
         return sb.toString();
     }
 
+    public static ConnectionBuilder builder() {
+        return new ConnectionBuilder();
+    }
+
     public static class ConnectionBuilder {
 
         private String connectionType;
@@ -100,6 +104,10 @@ public class Connection {
         private String connectionTarget;
 
         private String connectionToken;
+
+        private ConnectionBuilder() {
+
+        }
 
         public ConnectionBuilder withConnectionType(String connectionType) {
             this.connectionType = connectionType;
