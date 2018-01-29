@@ -15,17 +15,22 @@
 package org.jnosql.javaone.gameon.map.resource;
 
 import org.jnosql.javaone.gameon.map.DoorDescription;
+import org.jnosql.javaone.gameon.map.validation.ValidDescription;
 
 import java.io.Serializable;
 
 public class DoorDescriptionDTO implements Serializable {
 
+    @ValidDescription
     private String north;
 
+    @ValidDescription
     private String south;
 
+    @ValidDescription
     private String west;
 
+    @ValidDescription
     private String east;
 
     public String getNorth() {
