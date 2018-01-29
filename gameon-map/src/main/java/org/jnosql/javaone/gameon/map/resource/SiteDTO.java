@@ -25,11 +25,7 @@ public class SiteDTO implements Serializable {
     @ValidName
     private String name;
 
-    private String connectionType;
-
-    private String connectionTarget;
-
-    private String connectionToken;
+   private ConnectionDTO connection;
 
     private String fullName;
 
@@ -51,28 +47,12 @@ public class SiteDTO implements Serializable {
         this.name = name;
     }
 
-    public String getConnectionType() {
-        return connectionType;
+    public ConnectionDTO getConnection() {
+        return connection;
     }
 
-    public void setConnectionType(String connectionType) {
-        this.connectionType = connectionType;
-    }
-
-    public String getConnectionTarget() {
-        return connectionTarget;
-    }
-
-    public void setConnectionTarget(String connectionTarget) {
-        this.connectionTarget = connectionTarget;
-    }
-
-    public String getConnectionToken() {
-        return connectionToken;
-    }
-
-    public void setConnectionToken(String connectionToken) {
-        this.connectionToken = connectionToken;
+    public void setConnection(ConnectionDTO connection) {
+        this.connection = connection;
     }
 
     public String getFullName() {
@@ -127,9 +107,7 @@ public class SiteDTO implements Serializable {
     public static SiteDTO of(Site site) {
         SiteDTO dto = new SiteDTO();
         dto.name = site.getName();
-        dto.connectionType = site.getConnectionType();
-        dto.connectionTarget = site.getConnectionTarget();
-        dto.connectionToken = site.getConnectionToken();
+        dto.connection = ConnectionDTO.of(site.getConnection());
         dto.fullName = site.getFullName();
         dto.description = site.getDescription();
         dto.owner = site.getOwner();
@@ -142,9 +120,9 @@ public class SiteDTO implements Serializable {
     public Site toSite() {
         return Site.builder()
                 .withName(name)
-                .withConnectionType(connectionType)
-                .withConnectionTarget(connectionTarget)
-                .withConnectionToken(connectionToken)
+                .withConnectionType(connection.getType())
+                .withConnectionTarget(connection.getTarget())
+                .withConnectionToken(connection.getToken())
                 .withFullName(fullName)
                 .withDescription(description)
                 .withOwner(owner)
@@ -157,9 +135,7 @@ public class SiteDTO implements Serializable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("SiteDTO{");
         sb.append("name='").append(name).append('\'');
-        sb.append(", connectionType='").append(connectionType).append('\'');
-        sb.append(", connectionTarget='").append(connectionTarget).append('\'');
-        sb.append(", connectionToken='").append(connectionToken).append('\'');
+        sb.append(", connection=").append(connection);
         sb.append(", fullName='").append(fullName).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", owner='").append(owner).append('\'');
