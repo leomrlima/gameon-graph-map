@@ -52,15 +52,15 @@ public class Connection {
         this.connectionToken = connectionToken;
     }
 
-    public String getConnectionType() {
+    public String getType() {
         return connectionType;
     }
 
-    public String getConnectionTarget() {
+    public String getTarget() {
         return connectionTarget;
     }
 
-    public String getConnectionToken() {
+    public String getToken() {
         return connectionToken;
     }
 
@@ -69,7 +69,7 @@ public class Connection {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Connection)){
+        if (!(o instanceof Connection)) {
             return false;
         }
         Connection that = (Connection) o;
@@ -91,5 +91,34 @@ public class Connection {
         sb.append(", connectionToken='").append(connectionToken).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public static class ConnectionBuilder {
+
+        private String connectionType;
+
+        private String connectionTarget;
+
+        private String connectionToken;
+
+        public ConnectionBuilder withConnectionType(String connectionType) {
+            this.connectionType = connectionType;
+            return this;
+        }
+
+        public ConnectionBuilder withConnectionTarget(String connectionTarget) {
+            this.connectionTarget = connectionTarget;
+            return this;
+        }
+
+        public ConnectionBuilder withConnectionToken(String connectionToken) {
+            this.connectionToken = connectionToken;
+            return this;
+        }
+
+        public Connection build() {
+            return new Connection(connectionType, connectionTarget, connectionToken);
+        }
+
     }
 }

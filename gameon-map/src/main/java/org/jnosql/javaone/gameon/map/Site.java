@@ -37,6 +37,9 @@ public class Site implements Serializable {
     private Name name;
 
 
+    @Column
+    private Connection connection;
+
     /**
      * (Optional) Human-friendly room name
      */
@@ -63,17 +66,13 @@ public class Site implements Serializable {
     Site() {
     }
 
-    Site(String name, String connectionType,
-         String connectionTarget,
-         String connectionToken, String fullName,
+    Site(String name, Connection connection, String fullName,
          String description, String owner,
          Coordinate coordinate,
          SiteAvailability siteAvailability) {
 
         this.name = Name.of(name);
-        this.connectionType = connectionType;
-        this.connectionTarget = connectionTarget;
-        this.connectionToken = connectionToken;
+        this.connection = connection;
         this.fullName = fullName;
         this.description = description;
         this.owner = owner;
@@ -89,16 +88,8 @@ public class Site implements Serializable {
         return name.get();
     }
 
-    public String getConnectionType() {
-        return connectionType;
-    }
-
-    public String getConnectionTarget() {
-        return connectionTarget;
-    }
-
-    public String getConnectionToken() {
-        return connectionToken;
+    public Connection getConnection() {
+        return connection;
     }
 
     public String getFullName() {
@@ -132,10 +123,7 @@ public class Site implements Serializable {
 
 
     public void replaceWith(Site site) {
-        this.connectionType = ofNullable(this.connectionType).orElse(site.connectionType);
-        this.connectionTarget = ofNullable(this.connectionTarget).orElse(site.connectionTarget);
-        this.connectionToken = ofNullable(this.connectionToken).orElse(site.connectionToken);
-
+        this.connection = ofNullable(this.connection).orElse(site.connection);
         this.fullName = ofNullable(this.fullName).orElse(site.fullName);
         this.description = ofNullable(this.description).orElse(site.description);
         this.owner = ofNullable(this.owner).orElse(site.owner);
@@ -147,9 +135,7 @@ public class Site implements Serializable {
         if (Objects.isNull(id)) {
             this.id = site.id;
         }
-        this.connectionType = ofNullable(this.connectionType).orElse(site.connectionType);
-        this.connectionTarget = ofNullable(this.connectionTarget).orElse(site.connectionTarget);
-        this.connectionToken = ofNullable(this.connectionToken).orElse(site.connectionToken);
+        this.connection = ofNullable(this.connection).orElse(site.connection);
 
         this.fullName = ofNullable(this.fullName).orElse(site.fullName);
         this.description = ofNullable(this.description).orElse(site.description);
