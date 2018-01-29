@@ -21,26 +21,26 @@ public enum Direction implements Supplier<String>, Reversible {
 
     NORTH {
         @Override
-        public String getReverse() {
-            return SOUTH.get();
+        public Direction getReverse() {
+            return SOUTH;
         }
 
 
     }, SOUTH {
         @Override
-        public String getReverse() {
-            return NORTH.get();
+        public Direction getReverse() {
+            return NORTH;
         }
     }, EAST {
         @Override
-        public String getReverse() {
-            return WEST.get();
+        public Direction getReverse() {
+            return WEST;
         }
 
     }, WEST {
         @Override
-        public String getReverse() {
-            return EAST.get();
+        public Direction getReverse() {
+            return EAST;
         }
     };
 

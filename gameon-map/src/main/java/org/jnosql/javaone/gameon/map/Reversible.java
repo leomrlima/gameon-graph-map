@@ -17,5 +17,5 @@ package org.jnosql.javaone.gameon.map;
 
 public interface Reversible {
 
-    String getReverse();
+    Direction getReverse();
 }
