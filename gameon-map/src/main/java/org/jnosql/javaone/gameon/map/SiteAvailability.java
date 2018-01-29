@@ -14,6 +14,7 @@
  */
 package org.jnosql.javaone.gameon.map;
 
+import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Embeddable;
 
@@ -21,6 +22,8 @@ import java.util.Objects;
 
 @Embeddable
 public class SiteAvailability {
+
+    static final P<String> IS_AVIALABLE = P.within("true_true", "true_false", "false_true");
 
     @Column
     private boolean empty;

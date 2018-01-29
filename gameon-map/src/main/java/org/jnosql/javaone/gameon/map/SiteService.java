@@ -15,7 +15,6 @@
 
 package org.jnosql.javaone.gameon.map;
 
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.jnosql.artemis.Database;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
@@ -95,9 +94,10 @@ public class SiteService {
         Predicate<Site> isEmpty = Site::isEmpty;
         Predicate<Site> isDoorAvailable = Site::isDoorAvailable;
 
+
         return template.getTraversalVertex()
                 .orderBy("weight").asc()
-                .has("check", P.within("true_true", "true_false", "false_true"))
+                .has("siteAvailabilityStatus", SiteAvailability.IS_AVIALABLE)
                 .limit(1L)
                 .filter(isEmpty.or(isDoorAvailable))
                 .<Site>stream()
