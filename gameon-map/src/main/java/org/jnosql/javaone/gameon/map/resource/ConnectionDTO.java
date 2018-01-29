@@ -14,7 +14,6 @@
  */
 package org.jnosql.javaone.gameon.map.resource;
 
-import org.jnosql.artemis.Column;
 import org.jnosql.javaone.gameon.map.Connection;
 
 import java.io.Serializable;
