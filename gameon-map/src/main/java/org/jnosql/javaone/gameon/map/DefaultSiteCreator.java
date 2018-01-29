@@ -105,7 +105,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
 
         Set<Direction> directions = EnumSet.allOf(Direction.class);
-        directions.remove(Direction.valueOf(direction.getReverse()));
+        directions.remove(direction.getReverse());
 
         for (Direction d : directions) {
             Optional<Site> neighbor = siteService.findByCoordinate(to.getCoordinate().to(d));
