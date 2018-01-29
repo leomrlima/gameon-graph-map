@@ -76,10 +76,8 @@ public class Site implements Serializable {
     private Coordinate coordinate;
 
     @Column
-    private Boolean empty;
+    private SiteAvailability siteAvailability;
 
-    @Column
-    private Boolean doorAvailable;
 
     Site() {
     }
@@ -88,8 +86,8 @@ public class Site implements Serializable {
          String connectionTarget,
          String connectionToken, String fullName,
          String description, String owner,
-         Coordinate coordinate, boolean empty,
-         boolean doorAvailable) {
+         Coordinate coordinate,
+         SiteAvailability siteAvailability) {
 
         this.name = Name.of(name);
         this.connectionType = connectionType;
@@ -99,8 +97,7 @@ public class Site implements Serializable {
         this.description = description;
         this.owner = owner;
         this.coordinate = coordinate;
-        this.empty = empty;
-        this.doorAvailable = doorAvailable;
+        this.siteAvailability = siteAvailability;
     }
 
     public Long getId() {
@@ -140,12 +137,13 @@ public class Site implements Serializable {
     }
 
     public boolean isEmpty() {
-        return empty;
+        return siteAvailability.getEmpty();
     }
 
     public boolean isDoorAvailable() {
-        return doorAvailable;
+        return siteAvailability.getDoorAvailable();
     }
+
 
     public long getWeight() {
         return ofNullable(coordinate).map(Coordinate::getWeight).orElse(0L);
@@ -160,7 +158,7 @@ public class Site implements Serializable {
         this.fullName = ofNullable(this.fullName).orElse(site.fullName);
         this.description = ofNullable(this.description).orElse(site.description);
         this.owner = ofNullable(this.owner).orElse(site.owner);
-        this.empty = false;
+        this.siteAvailability.full();
     }
 
     public void merge(Site site) {
@@ -176,10 +174,8 @@ public class Site implements Serializable {
         this.description = ofNullable(this.description).orElse(site.description);
         this.owner = ofNullable(this.owner).orElse(site.owner);
 
-        this.doorAvailable = ofNullable(this.doorAvailable).orElse(site.doorAvailable);
+        this.siteAvailability = ofNullable(this.siteAvailability).orElse(site.siteAvailability);
         this.coordinate = ofNullable(this.coordinate).orElse(site.coordinate);
-        this.empty = ofNullable(this.empty).orElse(site.empty);
-        this.doorAvailable = ofNullable(this.doorAvailable).orElse(site.doorAvailable);
     }
 
     void setCoordinate(Coordinate coordinate) {
@@ -187,7 +183,7 @@ public class Site implements Serializable {
     }
 
     void doorUnavailable() {
-        this.doorAvailable = false;
+        this.siteAvailability.doorUnavailable();
     }
 
     public static SiteBuilder builder() {
@@ -210,24 +206,5 @@ public class Site implements Serializable {
     public int hashCode() {
         return Objects.hashCode(name);
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Site{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", connectionType='").append(connectionType).append('\'');
-        sb.append(", connectionTarget='").append(connectionTarget).append('\'');
-        sb.append(", connectionToken='").append(connectionToken).append('\'');
-        sb.append(", fullName='").append(fullName).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", owner='").append(owner).append('\'');
-        sb.append(", coordinate=").append(coordinate);
-        sb.append(", empty=").append(empty);
-        sb.append(", doorAvailable=").append(doorAvailable);
-        sb.append('}');
-        return sb.toString();
-    }
-
 
 }

@@ -15,6 +15,8 @@
 
 package org.jnosql.javaone.gameon.map;
 
+import org.jnosql.javaone.gameon.map.SiteAvailability.SiteAvailabilityBuilder;
+
 public class SiteBuilder {
 
     private String name;
@@ -33,9 +35,7 @@ public class SiteBuilder {
 
     private Coordinate coordinate;
 
-    private boolean empty = false;
-
-    private boolean doorAvailable = true;
+    private SiteAvailabilityBuilder siteAvailabilityBuilder = SiteAvailability.builder();
 
     SiteBuilder() {
     }
@@ -81,18 +81,16 @@ public class SiteBuilder {
     }
 
     public SiteBuilder withEmpty(boolean empty) {
-        this.empty = empty;
+        this.siteAvailabilityBuilder.withEmpty(empty);
         return this;
     }
 
     public SiteBuilder withDoorAvailable(boolean doorAvailable) {
-        this.doorAvailable = doorAvailable;
+        this.siteAvailabilityBuilder.withDoorAvailable(doorAvailable);
         return this;
     }
 
-
-
     public Site build() {
-        return new Site(name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, empty, doorAvailable);
+        return new Site(name, connectionType, connectionTarget, connectionToken, fullName, description, owner, coordinate, siteAvailabilityBuilder.build());
     }
 }

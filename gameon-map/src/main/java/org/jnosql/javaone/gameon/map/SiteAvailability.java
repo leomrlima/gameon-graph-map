@@ -9,19 +9,28 @@ import java.util.Objects;
 public class SiteAvailability {
 
     @Column
-    private Boolean empty;
+    private boolean empty;
 
     @Column
-    private Boolean doorAvailable;
+    private boolean doorAvailable;
 
     @Column
     private String siteAvailabilityStatus;
 
-    public Boolean getEmpty() {
+    SiteAvailability() {
+    }
+
+    private SiteAvailability(boolean empty, boolean doorAvailable) {
+        this.empty = empty;
+        this.doorAvailable = doorAvailable;
+        avialabilityStatus();
+    }
+
+    public boolean getEmpty() {
         return empty;
     }
 
-    public Boolean getDoorAvailable() {
+    public boolean getDoorAvailable() {
         return doorAvailable;
     }
 
@@ -50,10 +59,9 @@ public class SiteAvailability {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
         if (!(o instanceof SiteAvailability)) {
@@ -76,5 +84,32 @@ public class SiteAvailability {
         sb.append(", doorAvailable=").append(doorAvailable);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static SiteAvailabilityBuilder builder(){
+        return new SiteAvailabilityBuilder();
+    }
+
+    public static class SiteAvailabilityBuilder {
+
+        private boolean empty = false;
+
+        private boolean doorAvailable = true;
+
+        private SiteAvailabilityBuilder(){
+
+        }
+
+        public void withEmpty(boolean empty) {
+            this.empty = empty;
+        }
+
+        public void withDoorAvailable(boolean doorAvailable) {
+            this.doorAvailable = doorAvailable;
+        }
+
+        public SiteAvailability build() {
+            return new SiteAvailability(empty, doorAvailable);
+        }
     }
 }
