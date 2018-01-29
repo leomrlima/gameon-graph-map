@@ -33,6 +33,8 @@ public class SiteBuilder {
 
     private SiteAvailabilityBuilder siteAvailabilityBuilder = SiteAvailability.builder();
 
+    private DoorDescription doorDescription;
+
     SiteBuilder() {
     }
 
@@ -86,7 +88,12 @@ public class SiteBuilder {
         return this;
     }
 
+    public SiteBuilder withDoorDescription(DoorDescription doorDescription) {
+        this.doorDescription = doorDescription;
+        return this;
+    }
+
     public Site build() {
-        return new Site(name, connectionBuilder.build(), fullName, description, owner, coordinate, siteAvailabilityBuilder.build());
+        return new Site(name, connectionBuilder.build(), fullName, description, owner, coordinate, siteAvailabilityBuilder.build(), doorDescription);
     }
 }

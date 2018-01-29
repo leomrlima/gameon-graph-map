@@ -70,6 +70,10 @@ public class DoorDescription {
         return sb.toString();
     }
 
+    public static DoorDescriptionBuilder builder() {
+        return new DoorDescriptionBuilder();
+    }
+
     public static class DoorDescriptionBuilder {
 
         private String north;
