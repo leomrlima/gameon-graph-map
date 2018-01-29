@@ -99,7 +99,7 @@ public class SiteCreatorTest {
         Coordinate coordinate = southSite.getCoordinate();
         Assertions.assertEquals(-1, coordinate.getY());
         Assertions.assertEquals(0, coordinate.getX());
-        Assertions.assertEquals(-1, coordinate.getWeight());
+        Assertions.assertEquals(1, coordinate.getWeight());
 
     }
 
@@ -117,7 +117,7 @@ public class SiteCreatorTest {
         Coordinate coordinate = westSite.getCoordinate();
         Assertions.assertEquals(0, coordinate.getY());
         Assertions.assertEquals(-1, coordinate.getX());
-        Assertions.assertEquals(-1, coordinate.getWeight());
+        Assertions.assertEquals(1, coordinate.getWeight());
     }
 
     @Test

@@ -40,7 +40,7 @@ public class CoordinateTest {
         Coordinate south = Coordinate.MAIN.toSouth();
         Assertions.assertEquals(0, south.getX());
         Assertions.assertEquals(-1, south.getY());
-        Assertions.assertEquals(-1, south.getWeight());
+        Assertions.assertEquals(1, south.getWeight());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CoordinateTest {
         Coordinate west = Coordinate.MAIN.toWest();
         Assertions.assertEquals(-1, west.getX());
         Assertions.assertEquals(-0, west.getY());
-        Assertions.assertEquals(-1, west.getWeight());
+        Assertions.assertEquals(1, west.getWeight());
     }
 
 }
