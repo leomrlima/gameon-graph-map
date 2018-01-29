@@ -67,7 +67,7 @@ public class SiteAvailability {
     }
 
     void doorUnavailable() {
-        this.doorAvailable = true;
+        this.doorAvailable = false;
         avialabilityStatus();
     }
 
