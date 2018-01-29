@@ -25,7 +25,7 @@ public class SiteDTO implements Serializable {
     @ValidName
     private String name;
 
-   private ConnectionDTO connection;
+    private ConnectionDTO connection;
 
     private String fullName;
 
@@ -38,6 +38,8 @@ public class SiteDTO implements Serializable {
     private boolean empty;
 
     private boolean doorAvailable;
+
+    private DoorDescriptionDTO doorDescription;
 
     public String getName() {
         return name;
@@ -103,6 +105,13 @@ public class SiteDTO implements Serializable {
         this.doorAvailable = doorAvailable;
     }
 
+    public DoorDescriptionDTO getDoorDescription() {
+        return doorDescription;
+    }
+
+    public void setDoorDescription(DoorDescriptionDTO doorDescription) {
+        this.doorDescription = doorDescription;
+    }
 
     public static SiteDTO of(Site site) {
         SiteDTO dto = new SiteDTO();
@@ -114,6 +123,7 @@ public class SiteDTO implements Serializable {
         dto.coordinate = CoordinateDTO.of(site.getCoordinate());
         dto.empty = site.isEmpty();
         dto.doorAvailable = site.isDoorAvailable();
+        dto.doorDescription = DoorDescriptionDTO.of(site.getDoorDescription());
         return dto;
     }
 
@@ -128,7 +138,8 @@ public class SiteDTO implements Serializable {
                 .withOwner(owner)
                 .withCoordinate(CoordinateDTO.from(coordinate))
                 .withEmpty(empty)
-                .withDoorAvailable(doorAvailable).build();
+                .withDoorAvailable(doorAvailable)
+                .withDoorDescription(DoorDescriptionDTO.of(doorDescription)).build();
     }
 
     @Override
