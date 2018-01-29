@@ -1,0 +1,80 @@
+package org.jnosql.javaone.gameon.map;
+
+import org.jnosql.artemis.Column;
+import org.jnosql.artemis.Embeddable;
+
+import java.util.Objects;
+
+@Embeddable
+public class SiteAvailability {
+
+    @Column
+    private Boolean empty;
+
+    @Column
+    private Boolean doorAvailable;
+
+    @Column
+    private String siteAvailabilityStatus;
+
+    public Boolean getEmpty() {
+        return empty;
+    }
+
+    public Boolean getDoorAvailable() {
+        return doorAvailable;
+    }
+
+    void full() {
+        this.empty = false;
+        avialabilityStatus();
+    }
+
+    void empty() {
+        this.empty = true;
+        avialabilityStatus();
+    }
+
+    void doorAvailable() {
+        this.doorAvailable = true;
+        avialabilityStatus();
+    }
+
+    void doorUnavailable() {
+        this.doorAvailable = true;
+        avialabilityStatus();
+    }
+
+    private void avialabilityStatus() {
+        this.siteAvailabilityStatus = Boolean.toString(empty) + '_' + Boolean.toString(doorAvailable);
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof SiteAvailability)) {
+            return false;
+        }
+        SiteAvailability that = (SiteAvailability) o;
+        return Objects.equals(empty, that.empty) &&
+                Objects.equals(doorAvailable, that.doorAvailable);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empty, doorAvailable);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("SiteAvailability{");
+        sb.append("empty=").append(empty);
+        sb.append(", doorAvailable=").append(doorAvailable);
+        sb.append('}');
+        return sb.toString();
+    }
+}
