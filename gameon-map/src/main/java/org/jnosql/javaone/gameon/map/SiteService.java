@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
@@ -91,15 +90,10 @@ public class SiteService {
 
     public Optional<Site> getRecentRoom() {
 
-        Predicate<Site> isEmpty = Site::isEmpty;
-        Predicate<Site> isDoorAvailable = Site::isDoorAvailable;
-
-
         return template.getTraversalVertex()
                 .orderBy("weight").asc()
                 .has("siteAvailabilityStatus", SiteAvailability.IS_AVIALABLE)
                 .limit(1L)
-                .filter(isEmpty.or(isDoorAvailable))
                 .<Site>stream()
                 .findFirst();
     }
