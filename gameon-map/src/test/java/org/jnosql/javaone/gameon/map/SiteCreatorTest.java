@@ -66,8 +66,6 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToNorth() {
-        String forward = "north gate description";
-        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
@@ -87,8 +85,6 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToSouth() {
-        String forward = "south gate description";
-        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
@@ -105,8 +101,6 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToWest() {
-        String forward = "west gate description";
-        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
@@ -122,8 +116,6 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldCreateToEast() {
-        String forward = "east gate description";
-        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
@@ -140,8 +132,6 @@ public class SiteCreatorTest {
 
     @Test
     public void shouldReturnErrorWhenUseCreatorTwice() {
-        String forward = "east gate description";
-        String backward = "back gate description";
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
