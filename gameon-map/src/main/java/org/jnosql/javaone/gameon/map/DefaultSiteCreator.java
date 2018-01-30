@@ -66,6 +66,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     @Override
     public void by(Direction direction) {
+        requireNonNull(direction, "direction is required");
         check();
 
         Coordinate coordinate = from.getCoordinate();
