@@ -14,19 +14,13 @@
  */
 package org.jnosql.javaone.gameon.map;
 
-import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
 
 import java.util.EnumSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
-import static org.jnosql.javaone.gameon.map.Direction.EAST;
-import static org.jnosql.javaone.gameon.map.Direction.NORTH;
-import static org.jnosql.javaone.gameon.map.Direction.SOUTH;
-import static org.jnosql.javaone.gameon.map.Direction.WEST;
 
 class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, SiteCreator.SiteDestination {
 
@@ -69,27 +63,6 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         return this;
     }
 
-    @Override
-    public void north(String forward, String backward) throws NullPointerException {
-        implDirection(forward, backward, Coordinate::toNorth, NORTH);
-    }
-
-    @Override
-    public void south(String forward, String backward) throws NullPointerException {
-        implDirection(forward, backward, Coordinate::toSouth, SOUTH);
-    }
-
-    @Override
-    public void west(String forward, String backward) throws NullPointerException {
-
-        implDirection(forward, backward, Coordinate::toWest, WEST);
-    }
-
-    @Override
-    public void east(String forward, String backward) throws NullPointerException {
-
-        implDirection(forward, backward, Coordinate::toEast, EAST);
-    }
 
     @Override
     public void by(Direction direction) {
@@ -119,26 +92,6 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
     }
 
-    private void implDirection(String forward, String backward, UnaryOperator<Coordinate> operator,
-                                 Direction direction) {
-
-
-        check();
-        requireNonNull(forward, "description is required");
-        requireNonNull(backward, "backward is required");
-
-        to.setCoordinate(operator.apply(from.getCoordinate()));
-        siteService.create(to);
-        to = siteService.findByName(to.getName()).get();
-        EdgeEntity edgeForward = graphTemplate.edge(from, direction, to);
-        EdgeEntity edgebackward = graphTemplate.edge(to, direction.getReverse(), from);
-
-        edgeForward.add("description", forward);
-        edgebackward.add("description", backward);
-
-        this.isValid = false;
-
-    }
 
     private void check() {
         if(!isValid) {

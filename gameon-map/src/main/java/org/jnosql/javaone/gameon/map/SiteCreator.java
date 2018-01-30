@@ -25,14 +25,6 @@ public interface SiteCreator {
 
     interface SiteDestination {
 
-        void north(String forward, String backward) throws NullPointerException;
-
-        void  south(String forward, String backward) throws NullPointerException;
-
-        void  west(String forward, String backward) throws NullPointerException;
-
-        void  east(String forward, String backward) throws NullPointerException;
-
         void by(Direction direction);
     }
 }

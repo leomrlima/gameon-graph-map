@@ -105,6 +105,7 @@ public class SiteService {
     }
 
 
+    @Transactional
     public void place(Site site) {
         Site recentRoom = getRecentRoom().get();
 
