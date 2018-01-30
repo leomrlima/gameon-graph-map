@@ -287,4 +287,16 @@ public class SiteServiceTest {
 
     }
 
+    @Test
+    public void shouldDelete() {
+        Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
+        siteService.create(main);
+
+        siteService.deleteByName("main");
+
+        Optional<Site> site = siteService.findByName("main");
+        Assertions.assertTrue(site.isPresent());
+        Assertions.assertTrue(site.map(Site::isEmpty).orElse(false));
+    }
+
 }

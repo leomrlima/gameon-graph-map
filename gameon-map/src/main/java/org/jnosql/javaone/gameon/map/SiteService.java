@@ -68,7 +68,11 @@ public class SiteService {
     @Transactional
     public void deleteByName(String name) {
         requireNonNull(name, "name is required");
-        repository.deleteByName(Name.of(name).get());
+        Optional<Site> site = repository.findByName(Name.of(name).get());
+        site.ifPresent(s -> {
+            s.empty();
+            repository.save(s);
+        });
     }
 
     public Optional<Site> findByName(String name) {
@@ -92,7 +96,7 @@ public class SiteService {
 
         return template.getTraversalVertex()
                 .orderBy("weight").asc()
-                .has("siteAvailabilityStatus", SiteAvailability.IS_AVIALABLE)
+                .has(SiteAvailability.PROPERTY, SiteAvailability.IS_AVIALABLE)
                 .limit(1L)
                 .<Site>stream()
                 .findFirst();

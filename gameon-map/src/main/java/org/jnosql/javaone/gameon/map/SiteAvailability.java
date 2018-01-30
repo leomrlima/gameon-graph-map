@@ -23,6 +23,7 @@ import java.util.Objects;
 @Embeddable
 public class SiteAvailability {
 
+    static final String PROPERTY = "siteAvailabilityStatus";
     static final P<String> IS_AVIALABLE = P.within("true_true", "true_false", "false_true");
 
     @Column

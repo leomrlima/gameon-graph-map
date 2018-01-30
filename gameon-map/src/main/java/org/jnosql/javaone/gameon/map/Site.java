@@ -129,6 +129,10 @@ public class Site implements Serializable {
         return doorDescription;
     }
 
+    void empty() {
+        this.siteAvailability.empty();
+    }
+
     public void replaceWith(Site site) {
         this.connection = ofNullable(this.connection).orElse(site.connection);
         this.fullName = ofNullable(this.fullName).orElse(site.fullName);
@@ -199,4 +203,5 @@ public class Site implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
 }
