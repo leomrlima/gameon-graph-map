@@ -50,14 +50,14 @@ public class SiteCreatorTest {
 
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->{
-            siteService.getNewSiteCreator().to(site);
+            siteService.createSite().to(site);
         });
     }
 
     @Test
     public void shouldReturnErrorWhenFromSiteDoesNotExist() {
         Site site = builder().withName("second").withFullName("Main room site").build();
-        SiteCreator.SiteFromCreator siteFromCreator = siteService.getNewSiteCreator().to(site);
+        SiteCreator.SiteFromCreator siteFromCreator = siteService.createSite().to(site);
         Assertions.assertThrows(IllegalArgumentException.class, () ->{
             siteFromCreator.from("not_found");
         });
@@ -69,7 +69,7 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").by(Direction.NORTH);
+        siteService.createSite().to(site).from("main").by(Direction.NORTH);
 
         main = siteService.findByName("main").get();
         Site northSite = siteService.findByName("second").get();
@@ -88,7 +88,7 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").by(Direction.SOUTH);
+        siteService.createSite().to(site).from("main").by(Direction.SOUTH);
 
         Site southSite = siteService.findByName("second").get();
 
@@ -104,7 +104,7 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").by(Direction.WEST);
+        siteService.createSite().to(site).from("main").by(Direction.WEST);
 
         Site westSite = siteService.findByName("second").get();
 
@@ -119,7 +119,7 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        SiteCreator siteCreator = siteService.getNewSiteCreator();
+        SiteCreator siteCreator = siteService.createSite();
         siteCreator.to(site).from("main").by(Direction.EAST);
 
         Site eastSite = siteService.findByName("second").get();
@@ -135,7 +135,7 @@ public class SiteCreatorTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        SiteCreator siteCreator = siteService.getNewSiteCreator();
+        SiteCreator siteCreator = siteService.createSite();
         siteCreator.to(site).from("main").by(Direction.WEST);
 
         Site third = builder().withName("third").withFullName("Main room site").build();

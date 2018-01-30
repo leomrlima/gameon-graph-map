@@ -96,7 +96,7 @@ public class SiteServiceTest {
 
     @Test
     public void shouldCreateNewSite() {
-        assertNotNull(siteService.getNewSiteCreator());
+        assertNotNull(siteService.createSite());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class SiteServiceTest {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
         Site site = builder().withName("second").withFullName("Main room site").build();
-        siteService.getNewSiteCreator().to(site).from("main").by(Direction.WEST);
+        siteService.createSite().to(site).from("main").by(Direction.WEST);
 
         Site eastSite = siteService.findByName("second").get();
         main = siteService.findByName("main").get();

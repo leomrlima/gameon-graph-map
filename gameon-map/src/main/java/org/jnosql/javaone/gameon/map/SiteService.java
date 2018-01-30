@@ -84,7 +84,7 @@ public class SiteService {
     }
 
 
-    public SiteCreator getNewSiteCreator() {
+    public SiteCreator createSite() {
         return new DefaultSiteCreator(this, template);
     }
 
@@ -122,7 +122,7 @@ public class SiteService {
 
         Direction next = directions.iterator().next();
 
-        getNewSiteCreator().to(site).from(recentRoom.getName()).by(next);
+        createSite().to(site).from(recentRoom.getName()).by(next);
 
         if (directions.size() == 1) {
             recentRoom.doorUnavailable();
