@@ -56,7 +56,7 @@ public class SiteService {
 
 
     @Transactional
-    public void create(Site site) {
+    void create(Site site) {
         requireNonNull(site, "site is required");
         repository.findByName(site.getName()).ifPresent(c -> {
             throw new IllegalArgumentException("The site name already does exist: " + site.getName());
@@ -87,13 +87,12 @@ public class SiteService {
     }
 
 
-    public SiteCreator createSite() {
+    SiteCreator createSite() {
         return new DefaultSiteCreator(this, template);
     }
 
 
-    public Optional<Site> getRecentRoom() {
-
+    Optional<Site> getRecentRoom() {
         return template.getTraversalVertex()
                 .orderBy("weight").asc()
                 .has(SiteAvailability.PROPERTY, SiteAvailability.IS_AVIALABLE)

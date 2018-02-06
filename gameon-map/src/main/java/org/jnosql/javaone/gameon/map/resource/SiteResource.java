@@ -71,7 +71,7 @@ public class SiteResource {
     @POST
     public void create(@Valid SiteDTO dto) {
         try {
-            siteService.create(dto.toSite());
+            siteService.place(dto.toSite());
         } catch (IllegalArgumentException ex) {
             throw new WebApplicationException(ex.getMessage(), BAD_REQUEST);
         }
