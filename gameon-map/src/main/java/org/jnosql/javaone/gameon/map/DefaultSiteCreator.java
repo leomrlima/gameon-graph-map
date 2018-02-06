@@ -83,10 +83,10 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
         for (Direction d : directions) {
             Optional<Site> neighbor = siteService.findByCoordinate(to.getCoordinate().to(d));
-            if(neighbor.isPresent()) {
-                graphTemplate.edge(neighbor.get(), d.getReverse(), to);
-                graphTemplate.edge(to, d, neighbor.get());
-            }
+            neighbor.ifPresent(site -> {
+                graphTemplate.edge(site, d.getReverse(), to);
+                graphTemplate.edge(to, d, site);
+            });
         }
 
         this.isValid = false;
