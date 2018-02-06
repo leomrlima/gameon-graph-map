@@ -144,11 +144,5 @@ public class SiteCreatorTest {
         });
     }
 
-    @DisplayName("Check")
-    @Test
-    public void shouldCheckNextRoom() {
-
-    }
-
 
 }

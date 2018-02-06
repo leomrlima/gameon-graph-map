@@ -36,7 +36,7 @@ class DriverProducer {
     Driver getDriver(InjectionPoint injectionPoint) {
 
         if (driver == null) {
-            LOGGER.info(String.format("Loading driver configuration from"));
+            LOGGER.info("Loading driver configuration");
             this.driver = Neo4JConfiguration.DEFAULT.getDriver();
         }
 
