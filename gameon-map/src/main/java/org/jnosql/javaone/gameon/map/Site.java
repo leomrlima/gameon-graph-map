@@ -131,6 +131,7 @@ public class Site implements Serializable {
 
     void empty() {
         this.siteAvailability.empty();
+        this.name = Name.of(Long.toString(coordinate.getWeight()) + ':' + Long.toString(coordinate.getY()));
     }
 
     public void replaceWith(Site site) {

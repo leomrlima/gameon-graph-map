@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,7 +37,6 @@ import static org.jnosql.javaone.gameon.map.Site.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -188,7 +186,7 @@ public class SiteServiceTest {
 
         main = siteService.findByName("main").get();
 
-        Assertions.assertFalse(main.isDoorAvailable());
+        assertFalse(main.isDoorAvailable());
 
     }
 
@@ -294,7 +292,9 @@ public class SiteServiceTest {
 
         siteService.deleteByName("main");
 
-        Optional<Site> site = siteService.findByName("main");
+        assertFalse(siteService.findByName("main").isPresent());
+
+        Optional<Site> site = siteService.findByName("0:0");
         Assertions.assertTrue(site.isPresent());
         Assertions.assertTrue(site.map(Site::isEmpty).orElse(false));
     }
