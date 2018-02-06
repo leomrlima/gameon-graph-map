@@ -49,18 +49,14 @@ public class SiteCreatorTest {
         siteService.create(site);
 
 
-        Assertions.assertThrows(IllegalArgumentException.class, () ->{
-            siteService.createSite().to(site);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> siteService.createSite().to(site));
     }
 
     @Test
     public void shouldReturnErrorWhenFromSiteDoesNotExist() {
         Site site = builder().withName("second").withFullName("Main room site").build();
         SiteCreator.SiteFromCreator siteFromCreator = siteService.createSite().to(site);
-        Assertions.assertThrows(IllegalArgumentException.class, () ->{
-            siteFromCreator.from("not_found");
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> siteFromCreator.from("not_found"));
 
     }
 
@@ -139,9 +135,7 @@ public class SiteCreatorTest {
         siteCreator.to(site).from("main").by(Direction.WEST);
 
         Site third = builder().withName("third").withFullName("Main room site").build();
-        Assertions.assertThrows(IllegalStateException.class, () ->{
-            siteCreator.to(third).from("main").by(Direction.EAST);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () -> siteCreator.to(third).from("main").by(Direction.EAST));
     }
 
 

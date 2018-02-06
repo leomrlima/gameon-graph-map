@@ -70,9 +70,7 @@ public class SiteServiceTest {
     public void shouldReturnErrorWhenThereIsDoubleRoom() {
         Site site = builder().withName("main").withFullName("Main room site").build();
         siteService.create(site);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            siteService.create(site);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> siteService.create(site));
 
         assertEquals("The site name already does exist: main", exception.getMessage());
     }

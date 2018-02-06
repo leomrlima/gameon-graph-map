@@ -28,9 +28,7 @@ class NameTest {
 
     @Test
     public void shouldReturnErrorWhenTheValueIsNull() {
-        assertThrows(NullPointerException.class, () -> {
-            Name.of(null);
-        });
+        assertThrows(NullPointerException.class, () -> Name.of(null));
     }
 
     @Test
