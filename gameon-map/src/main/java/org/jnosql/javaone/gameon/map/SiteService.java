@@ -83,7 +83,7 @@ public class SiteService {
     public Optional<Site> goTo(Site site, Direction direction) {
         requireNonNull(site, "site is required");
         requireNonNull(direction, "direction is required");
-        return template.getTraversalVertex(site.getId()).out(direction).<Site>next();
+        return template.getTraversalVertex(site.getId()).out(direction).next();
     }
 
 
