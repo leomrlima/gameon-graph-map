@@ -28,4 +28,10 @@ Neo4j is a graph database management system developed by Neo4j, Inc. Described b
 
 # Run the Application
 1. `mvn clean package`
-1. `mvn tomee:run`
+1. Adds it in a Java EE 8 server
+
+
+## Tests
+
+1. `curl -H "Content-Type: application/json" -X POST -d '{"owner":"Leonardo Lima","doorDescription":{"east":"East description","south":"south description","north":"north description","west":"West description"},"name":"main room","fullName":" main room full name"}' http://localhost:8080/gameon-map-0.0.4/resource/sites/
+`
