@@ -36,3 +36,9 @@ Neo4j is a graph database management system developed by Neo4j, Inc. Described b
 1. `curl -H "Content-Type: application/json" -X POST -d '{"owner":"Leonardo Lima","doorDescription":{"east":"East description","south":"south description","north":"north description","west":"West description"},"name":"main_room","fullName":"main room full name"}' http://localhost:8080/gameon-map-0.0.4/resource/sites/`
 1. `curl -H "Content-Type: application/json" -X POST -d '{"owner":"Leonardo Lima","doorDescription":{"east":"East description","south":"south description","north":"north description","west":"West description"},"name":"second_room","fullName":"the second room full name"}' http://localhost:8080/gameon-map-0.0.4/resource/sites/`
 1. `curl -H "Content-Type: application/json" -X POST -d '{"owner":"Leonardo Lima","doorDescription":{"east":"East description","south":"south description","north":"north description","west":"West description"},"name":"third_room","fullName":"the third room full name"}' http://localhost:8080/gameon-map-0.0.4/resource/sites/`
+
+## Queries
+
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/main_room`
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/second_room`
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/thid_room`
