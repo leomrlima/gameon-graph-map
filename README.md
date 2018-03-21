@@ -11,3 +11,17 @@ Recommendation system using Java EE 8 and Neo4J with JNoSQL.
 ![Neo4J Project](https://jnosql.github.io/img/logos/neo4j.png)
 
 Neo4j is a graph database management system developed by Neo4j, Inc. Described by its developers as an ACID-compliant transactional database with native graph storage and processing, Neo4j is the most popular graph database according to DB-Engines ranking.
+
+## Install Neo4J
+
+### How To install
+
+
+![Docker](https://www.docker.com/sites/default/files/horizontal_large.png)
+
+
+1. Install docker: https://www.docker.com/
+1. https://store.docker.com/images/neo4j
+1. Run docker command
+1. `docker rm -f neo4j || true && docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -v $HOME/neo4j/data:/data neo4j`
+1. configure Neo4J http://localhost:7474 - The default initial password is "neo4j". Set it to "admin".
