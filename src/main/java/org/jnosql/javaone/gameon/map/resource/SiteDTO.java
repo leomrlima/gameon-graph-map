@@ -36,7 +36,7 @@ public class SiteDTO implements Serializable {
 
     private boolean empty;
 
-    private boolean doorAvailable;
+    private boolean doorAvailable = true;
 
     private DoorDescriptionDTO doorDescription;
 

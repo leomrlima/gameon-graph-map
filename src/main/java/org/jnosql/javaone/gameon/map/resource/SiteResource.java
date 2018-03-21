@@ -71,6 +71,9 @@ public class SiteResource {
     @POST
     public void create(@Valid SiteDTO dto) {
         try {
+            if(!dto.isDoorAvailable()) {
+                throw new WebApplicationException("The user cannot create a site with a door already not available", BAD_REQUEST);
+            }
             siteService.place(dto.toSite());
         } catch (IllegalArgumentException ex) {
             throw new WebApplicationException(ex.getMessage(), BAD_REQUEST);
