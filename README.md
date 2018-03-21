@@ -42,3 +42,10 @@ Neo4j is a graph database management system developed by Neo4j, Inc. Described b
 * `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/main_room`
 * `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/second_room`
 * `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/thid_room`
+
+## Queries Directions
+
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/main_room/north`
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/main_room/south`
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/second_room/south`
+* `curl -GET localhost:8080/gameon-map-0.0.4/resource/sites/third_room/north`
