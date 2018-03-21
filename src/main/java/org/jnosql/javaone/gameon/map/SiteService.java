@@ -15,7 +15,6 @@
 
 package org.jnosql.javaone.gameon.map;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.jnosql.artemis.Database;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
