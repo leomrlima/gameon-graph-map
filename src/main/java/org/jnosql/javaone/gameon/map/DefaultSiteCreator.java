@@ -14,6 +14,7 @@
  */
 package org.jnosql.javaone.gameon.map;
 
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.jnosql.artemis.graph.GraphTemplate;
 
 import java.util.EnumSet;
@@ -72,10 +73,10 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
         Coordinate coordinate = from.getCoordinate();
         to.setCoordinate(coordinate.to(direction));
         siteService.create(to);
+        graphTemplate.getTransaction().commit();
         to = siteService.findByName(to.getName()).get();
         graphTemplate.edge(from, direction, to);
         graphTemplate.edge(to, direction.getReverse(), from);
-
 
 
         Set<Direction> directions = EnumSet.allOf(Direction.class);
@@ -95,7 +96,7 @@ class DefaultSiteCreator implements SiteCreator, SiteCreator.SiteFromCreator, Si
 
 
     private void check() {
-        if(!isValid) {
+        if (!isValid) {
             throw new IllegalStateException("This creation flow has finished, you need to create a new one.");
         }
     }

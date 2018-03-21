@@ -15,6 +15,7 @@
 
 package org.jnosql.javaone.gameon.map;
 
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.jnosql.artemis.Database;
 import org.jnosql.artemis.graph.EdgeEntity;
 import org.jnosql.artemis.graph.GraphTemplate;
@@ -44,7 +45,6 @@ public class SiteService {
 
     @Inject
     private GraphTemplate template;
-
 
     @Transactional
     public void update(Site site) {
@@ -107,7 +107,7 @@ public class SiteService {
 
         Optional<Site> optionalSite = getRecentRoom();
 
-        if(!optionalSite.isPresent()) {
+        if (!optionalSite.isPresent()) {
             site.setCoordinate(Coordinate.MAIN);
             repository.save(site);
             return;
