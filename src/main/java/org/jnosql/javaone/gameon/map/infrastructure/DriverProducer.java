@@ -16,7 +16,9 @@
 package org.jnosql.javaone.gameon.map.infrastructure;
 
 
+import org.jnosql.artemis.ConfigurationException;
 import org.jnosql.artemis.ConfigurationReader;
+import org.jnosql.artemis.ConfigurationSettingsUnit;
 import org.jnosql.artemis.ConfigurationUnit;
 import org.jnosql.diana.api.Settings;
 import org.neo4j.driver.v1.Driver;
@@ -28,6 +30,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
