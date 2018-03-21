@@ -16,6 +16,7 @@
 package org.jnosql.javaone.gameon.map.resource;
 
 import org.jnosql.javaone.gameon.map.Site;
+import org.jnosql.javaone.gameon.map.SiteBuilder;
 import org.jnosql.javaone.gameon.map.validation.ValidName;
 
 import java.io.Serializable;
@@ -128,18 +129,22 @@ public class SiteDTO implements Serializable {
     }
 
     public Site toSite() {
-        return Site.builder()
+        SiteBuilder builder = Site.builder()
                 .withName(name)
-                .withConnectionType(connection.getType())
-                .withConnectionTarget(connection.getTarget())
-                .withConnectionToken(connection.getToken())
                 .withFullName(fullName)
                 .withDescription(description)
                 .withOwner(owner)
                 .withCoordinate(CoordinateDTO.from(coordinate))
                 .withEmpty(empty)
                 .withDoorAvailable(doorAvailable)
-                .withDoorDescription(DoorDescriptionDTO.of(doorDescription)).build();
+                .withDoorDescription(DoorDescriptionDTO.of(doorDescription));
+
+        if (connection != null) {
+            builder.withConnectionType(connection.getType())
+                    .withConnectionTarget(connection.getTarget())
+                    .withConnectionToken(connection.getToken());
+        }
+        return builder.build();
     }
 
     @Override
