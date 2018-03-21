@@ -104,8 +104,16 @@ public class SiteService {
 
     @Transactional
     public void place(Site site) {
-        Site recentRoom = getRecentRoom().get();
 
+        Optional<Site> optionalSite = getRecentRoom();
+
+        if(!optionalSite.isPresent()) {
+            site.setCoordinate(Coordinate.MAIN);
+            repository.save(site);
+            return;
+        }
+
+        Site recentRoom = optionalSite.get();
         if (recentRoom.isEmpty()) {
             recentRoom.replaceWith(site);
             repository.save(recentRoom);
