@@ -22,9 +22,9 @@
     <packaging>war</packaging>
 
     <parent>
-        <groupId>org.jnosql.javaone</groupId>
-        <artifactId>gameon-map-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.jnosql</groupId>
+        <artifactId>jnosql-parent</artifactId>
+        <version>0.0.4</version>
     </parent>
 
     <properties>
