@@ -15,6 +15,7 @@
 
 package org.jnosql.javaone.gameon.map.resource;
 
+import org.jnosql.javaone.gameon.map.Direction;
 import org.jnosql.javaone.gameon.map.Name;
 import org.jnosql.javaone.gameon.map.Site;
 import org.jnosql.javaone.gameon.map.SiteService;
@@ -61,6 +62,30 @@ public class SiteResource {
         return SiteDTO.of(site);
     }
 
+    @GET
+    @Path("/{id}/north")
+    public SiteDTO findByIdNorth(@PathParam("id") @Valid @ValidName String id) {
+        return getSiteDTO(id, Direction.NORTH);
+    }
+
+    @GET
+    @Path("/{id}/south")
+    public SiteDTO findByIdSouth(@PathParam("id") @Valid @ValidName String id) {
+        return getSiteDTO(id, Direction.SOUTH);
+    }
+
+    @GET
+    @Path("/{id}/west")
+    public SiteDTO findByIdWest(@PathParam("id") @Valid @ValidName String id) {
+        return getSiteDTO(id, Direction.WEST);
+    }
+
+    @GET
+    @Path("/{id}/east")
+    public SiteDTO findByIdEast(@PathParam("id") @Valid @ValidName String id) {
+        return getSiteDTO(id, Direction.EAST);
+    }
+
     @DELETE
     @Path("/{id}")
     public void delete(@PathParam("id") @Valid @ValidName String id) {
@@ -71,7 +96,7 @@ public class SiteResource {
     @POST
     public void create(@Valid SiteDTO dto) {
         try {
-            if(!dto.isDoorAvailable()) {
+            if (!dto.isDoorAvailable()) {
                 throw new WebApplicationException("The user cannot create a site with a door already not available", BAD_REQUEST);
             }
             siteService.place(dto.toSite());
@@ -89,6 +114,14 @@ public class SiteResource {
 
         site.merge(dto.toSite());
         siteService.update(site);
+    }
+
+    private SiteDTO getSiteDTO(String id, Direction direction) {
+        Site site = siteService.findByName(id)
+                .orElseThrow(NOT_FOUND_SUPPLIER);
+        return siteService
+                .goTo(site, direction).map(SiteDTO::of)
+                .orElseThrow(NOT_FOUND_SUPPLIER);
     }
 
 }
