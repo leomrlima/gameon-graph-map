@@ -25,8 +25,6 @@ public class SiteDTO implements Serializable {
     @ValidName
     private String name;
 
-    private ConnectionDTO connection;
-
     private String fullName;
 
     private String description;
@@ -40,6 +38,8 @@ public class SiteDTO implements Serializable {
     private boolean doorAvailable;
 
     private DoorDescriptionDTO doorDescription;
+
+    private ConnectionDTO connection;
 
     public String getName() {
         return name;
