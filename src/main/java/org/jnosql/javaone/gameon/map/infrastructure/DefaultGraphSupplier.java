@@ -34,7 +34,6 @@ public class DefaultGraphSupplier implements GraphSupplier {
     private static final Neo4JElementIdProvider<?> EDGE_PROVIDER = new Neo4JNativeElementIdProvider();
 
 
-
     @Inject
     @ConfigurationUnit
     private Instance<Driver> driver;

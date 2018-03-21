@@ -16,18 +16,16 @@
 
 package org.jnosql.javaone.gameon.map.infrastructure;
 
+import org.jnosql.diana.api.Settings;
 import org.neo4j.driver.v1.AuthToken;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 
 import java.io.Serializable;
+import static org.neo4j.driver.v1.GraphDatabase.driver;
 import java.util.Objects;
 
-import static org.neo4j.driver.v1.GraphDatabase.driver;
-
 final class Neo4JConfiguration implements Serializable {
-
-    static final Neo4JConfiguration DEFAULT = new Neo4JConfiguration();
 
     private final String url;
 
@@ -35,10 +33,10 @@ final class Neo4JConfiguration implements Serializable {
 
     private final String password;
 
-    private Neo4JConfiguration() {
-        this.url = "bolt://localhost:7687";
-        this.user = "neo4j";
-        this.password = "admin";
+    public Neo4JConfiguration(Settings settings) {
+        this.url = settings.getOrDefault("url", "bolt://neo4j:7687").toString();
+        this.user = settings.getOrDefault("admin", "neo4j").toString();
+        this.password = settings.getOrDefault("password", "admin").toString();
     }
 
 
