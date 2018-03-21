@@ -123,6 +123,19 @@ public class SiteServiceTest {
     }
 
     @Test
+    public void shouldCreateWhenSiteAreNull() {
+        Site main = builder().withName("main").withFullName("Main room site").build();
+        siteService.place(main);
+        main = siteService.findByName("main")
+                .orElseThrow(() -> new RuntimeException("Should return the main room"));
+
+        assertEquals("main", main.getName());
+        assertEquals("Main room site", main.getFullName());
+        assertEquals(Coordinate.MAIN, main.getCoordinate());
+        assertNotNull(main.getId());
+    }
+
+    @Test
     public void shouldCreateNextRoom() {
         Site main = builder().withName("main").withFullName("Main room site").withCoordinate(Coordinate.MAIN).build();
         siteService.create(main);
