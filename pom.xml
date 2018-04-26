@@ -82,12 +82,12 @@
         <dependency>
             <groupId>org.jnosql.artemis</groupId>
             <artifactId>graph-extension</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
+            <version>0.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.jnosql.artemis</groupId>
             <artifactId>artemis-configuration</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
+            <version>0.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tinkerpop</groupId>
